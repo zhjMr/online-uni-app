@@ -1,6 +1,6 @@
 <template>
 	<view class="catalogue_box">
-		<view class="order" v-for="(item,index) in orderList" :key="index">
+		<view class="order" v-for="(item,index) in orderList" :key="index" @click="handleClickOrder(item)">
 			<view :class="item.icon"></view>
 			<view class="text_order">{{item.text}}</view>
 		</view>
@@ -20,6 +20,17 @@
 		data() {
 			return {
 
+			}
+		},
+		methods: {
+			handleClickOrder(data) {
+				console.log(data);
+				if (data.page) {
+					this.navTo(data.page, {
+						login: data.isLogin
+					})
+					
+				}
 			}
 		}
 	}

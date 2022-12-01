@@ -28,6 +28,9 @@
 
 			}
 		},
+		onNavigationBarButtonTap(){
+			console.log(111);
+		},
 		methods: {
 
 		}

@@ -1,15 +1,23 @@
 <template>
 	<view class="myuserBox">
 
-		<view class="tabsView" hover-class="active" v-for="(item,index) in navData" :key="index">
+		<view class="tabsView" hover-class="active" v-for="(item,index) in navData" :key="index"
+			@click="handleChangeNav(item)">
 			<view class="tabsLaft">
-				<text :class="item.icon"></text>
+				<text v-if="item.icon" :class="item.icon"></text>
 				<text>{{item.title}}</text>
 			</view>
-			<view class="right">
 
+			<view>
+				<view class="right" v-if="item.fotIcon"></view>
+				<text v-if="item.text">未知</text>
+				<view class="topImg" v-if="item.image">
+					<image src="../../../static/noLogin.png" mode=""></image>
+				</view>
 			</view>
+
 		</view>
+
 	</view>
 </template>
 
@@ -22,8 +30,21 @@
 				default: NavDataList
 			}
 		},
+
 		data() {
 			return {
+
+			}
+		},
+		methods: {
+			handleChangeNav(data) {
+				console.log(data);
+				//判断是否有跳转的路径 有进行跳转
+				if (data.page) {
+					this.navTo(data.page, {
+						login: data.isLogin
+					})
+				}
 
 			}
 		}
@@ -67,5 +88,19 @@
 		-webkit-transform: rotate(45deg);
 		transform:
 			rotate(45deg);
+	}
+
+	.topImg {
+		margin-left: 34rpx;
+		width: 150rpx;
+		height: 150rpx;
+		background-color: #fff;
+		border-radius: 50%;
+
+		image {
+			width: 100%;
+			height: 100%;
+		}
+
 	}
 </style>
