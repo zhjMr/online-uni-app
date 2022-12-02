@@ -14,9 +14,9 @@
 		</view>
 		<view class="inputFrom2" v-if="loginInfo">
 			<uni-icons class="icon" type="locked" size="24"></uni-icons>
-			<input type="text" placeholder="请输入确认密码">
+			<input type="text" placeholder="请输入确认密码" v-model="loginform.repassword">
 		</view>
-		<button class="bttonLogin" @click="getUserLoginList">登录</button>
+		<button class="bttonLogin" @click="getUserLoginList">{{loginInfo ? "注册" : "登录"}}</button>
 		<!-- 注册 -->
 		<view class="inputFrom3">
 			<text @click="handleregister" class="masterdd">
@@ -34,29 +34,67 @@
 		data() {
 			return {
 				loginInfo: false,
-				loginform :{
+				loginform: {
 					username: "",
 					password: "",
-				}
+					repassword: ""
+				},
+
 			}
 		},
 		onLoad() {
-			//调用用户登录接口
-			this.getUserLoginList()
+
 		},
 		methods: {
 			handleregister() {
 				this.loginInfo = !this.loginInfo
 			},
-			//获取用户登录接口
-			async getUserLoginList() {
+			//点击用户登录
+			async loginfrom() {
 				try {
+					uni.showLoading({
+						mask: false
+					});
 					const response = await LoginUserApi.getUserLogin(this.loginform)
 					console.log(response);
+					uni.hideLoading()
+					//请求数据进行提示
+					this.$util.msg(response.data.data)
 				} catch (e) {
+					uni.hideLoading()
 					console.log(e);
 					//TODO handle the exception
 				}
+			},
+
+			//点击用户注册
+			async registered() {
+				try {
+					uni.showLoading({
+						mask: false
+					});
+					const response = await LoginUserApi.getUserSing(this.loginform)
+					console.log(response);
+					uni.hideLoading()
+					//请求数据进行提示
+					this.$util.msg(response.data.data)
+				} catch (e) {
+					uni.hideLoading()
+					console.log(e);
+					//TODO handle the exception
+				}
+			},
+
+			// 判断是点击登录还是注册
+			getUserLoginList() {
+				if (this.loginInfo) {
+					// 注册方法
+					this.registered()
+				} else {
+					//登录方法
+					this.loginfrom()
+				}
+
 			}
 		}
 	}

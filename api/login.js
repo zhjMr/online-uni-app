@@ -8,7 +8,14 @@ const getUserLogin = (data) => {
 		data
 	})
 }
-
+const getUserSing = (data) => {
+	return request({
+		url: "/mobile/reg",
+		method: 'POST',
+		data
+	})
+}
 export default {
-	getUserLogin
+	getUserLogin,
+	getUserSing
 }

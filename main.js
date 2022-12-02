@@ -6,6 +6,9 @@ import mixins from '@/common/mixins/mixins.js'
 Vue.mixin(mixins)
 // 引入vuex
 import store from "@/store/index.js"
+// 引入 toast提示
+import * as util from '@/common/js/utils.js'
+Vue.prototype.$util = util
 
 Vue.config.productionTip = false
 App.mpType = 'app'

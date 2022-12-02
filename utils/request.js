@@ -13,9 +13,7 @@ const request = (options) => {
 			},
 			data: options.data || {},
 			success: (res) => {
-
 				resolve(res)
-
 			},
 			fail: (error) => {
 				reject(error)
