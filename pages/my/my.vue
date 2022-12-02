@@ -28,6 +28,7 @@
 
 			}
 		},
+		//监听按钮事件
 		onNavigationBarButtonTap(){
 			console.log(111);
 		},

@@ -29,7 +29,12 @@
 					this.navTo(data.page, {
 						login: data.isLogin
 					})
-					
+				}
+				//跳转tab页面
+				if (data.pages) {
+					uni.switchTab({
+						url: data.pages
+					})
 				}
 			}
 		}

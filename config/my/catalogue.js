@@ -24,7 +24,7 @@ export default () => {
 			id: "4",
 			icon: "iconfont icon-e-learning-monitor",
 			text: "在学",
-			page: "/pages/study/study"
+			pages: "/pages/study/study"
 		},
 	]
 }

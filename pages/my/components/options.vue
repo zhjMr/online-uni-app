@@ -9,9 +9,9 @@
 			</view>
 
 			<view>
-				<view class="right" v-if="item.fotIcon"></view>
+				<view v-if="item.fotIcon" class="right"></view>
 				<text v-if="item.text">未知</text>
-				<view class="topImg" v-if="item.image">
+				<view v-if="item.image" class="topImg">
 					<image src="../../../static/noLogin.png" mode=""></image>
 				</view>
 			</view>
