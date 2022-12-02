@@ -53,7 +53,7 @@
 
 <style lang="scss">
 	.myuserBox {
-		margin-top: 100rpx;
+		margin-top: 70rpx;
 
 		.tabsView {
 			box-sizing: border-box;

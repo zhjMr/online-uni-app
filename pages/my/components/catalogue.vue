@@ -44,6 +44,7 @@
 <style lang="scss">
 	.catalogue_box {
 		position: absolute;
+		border-radius: 20rpx;
 		left: 30rpx;
 		right: 30rpx;
 		width: 90%;

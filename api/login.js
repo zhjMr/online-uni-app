@@ -1,13 +1,14 @@
 // 引入http请求文件
 import request from "@/utils/request.js"
 
-const getUserList = () => {
+const getUserLogin = (data) => {
 	return request({
-		url: '/xx',
-		method: 'GET'
+		url: "/mobile/login",
+		method: 'POST',
+		data
 	})
 }
 
 export default {
-	getUserList
+	getUserLogin
 }
