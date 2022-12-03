@@ -3,7 +3,7 @@
 		<view class="login-bg"></view>
 		<view class="loginFrom">
 			<!-- 登录 -->
-			<loginfrom ></loginfrom>
+			<loginfrom @loginfrom="loginfrom" @loginStatus="loginStatus" :agreement="agreement"></loginfrom>
 			<!-- 微信 -->
 			<view class="wxmap">
 				<view class="WxappImg">
@@ -11,10 +11,13 @@
 				</view>
 			</view>
 
-			<view class="useragreement">
-				<label>
-					<checkbox value="agreement" color="#5ccc84" /><text>已阅读并同意用户协议隐私声明</text>
-				</label>
+			<view class="useragreement" v-if="!loginInfo">
+				<checkbox-group @change="handelChange">
+					<label>
+						<checkbox :checked="agreement" color="#5ccc84" />
+						<text>已阅读并同意用户协议&隐私声明</text>
+					</label>
+				</checkbox-group>
 			</view>
 		</view>
 	</view>
@@ -38,7 +41,24 @@
 
 		},
 		methods: {
-
+			//注册账号，去登录触发的方法
+			loginStatus(data) {
+				// console.log(data);
+				this.loginInfo=data
+			},
+			//隐私声明勾选触发的事件
+			handelChange() {
+				//点击进行状态切换
+				this.agreement = !this.agreement
+				// console.log(this.agreement);
+			},
+			//用户点击登录
+			loginfrom() {
+				if (!this.agreement) {
+					this.$util.msg('请阅读并同意用户协议&隐私声明')
+					return
+				}
+			}
 		}
 	}
 </script>

@@ -31,6 +31,13 @@
 <script>
 	import LoginUserApi from "@/api/login.js"
 	export default {
+		props: {
+			//隐私协议
+			agreement: {
+				type: Boolean,
+				default: false
+			}
+		},
 		data() {
 			return {
 				loginInfo: false,
@@ -48,6 +55,8 @@
 		methods: {
 			handleregister() {
 				this.loginInfo = !this.loginInfo
+				//传递注册账号 去登录方法
+				this.$emit("loginStatus", this.loginInfo)
 			},
 			//点击用户登录
 			async loginfrom() {
@@ -55,11 +64,27 @@
 					uni.showLoading({
 						mask: false
 					});
+
+					// 隐私协议
+					if (!this.agreement) {
+						this.$emit('loginfrom')
+						return
+					}
+
 					const response = await LoginUserApi.getUserLogin(this.loginform)
 					console.log(response);
 					uni.hideLoading()
-					//请求数据进行提示
-					this.$util.msg(response.data.data)
+
+					if (response.data.msg == "ok") {
+
+						this.$util.msg('登录成功')
+
+						this.$store.commit('setToken', response.data.data)
+					} else {
+						//请求数据进行提示
+						this.$util.msg(response.data.data)
+					}
+
 				} catch (e) {
 					uni.hideLoading()
 					console.log(e);
@@ -85,7 +110,7 @@
 				}
 			},
 
-			// 判断是点击登录还是注册
+			// 判断用户点击登录还是注册
 			getUserLoginList() {
 				if (this.loginInfo) {
 					// 注册方法
