@@ -56,7 +56,7 @@
 		align-items: center;
 		justify-content: space-around;
 		box-shadow: 2px 2px 5px #ddd;
-
+      
 		.iconfont {
 			font-size: 44rpx;
 			color: #febb00;

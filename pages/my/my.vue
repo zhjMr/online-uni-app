@@ -4,7 +4,6 @@
 			<myPhoto></myPhoto>
 			<mycatalogue></mycatalogue>
 		</view>
-
 		<myOptions></myOptions>
 	</view>
 
@@ -29,8 +28,9 @@
 			}
 		},
 		//监听按钮事件
-		onNavigationBarButtonTap(){
-			console.log(111);
+		onNavigationBarButtonTap() {
+			//点击。。。跳转到设置页面
+			this.navTo("/pages/my-coupon/setting")
 		},
 		methods: {
 
@@ -43,7 +43,9 @@
 		overflow: hidden;
 		width: 100%;
 		height: 380rpx;
+		margin-bottom: 70rpx;
 		background-color: #63c586;
 		border-radius: 0 0 20% 20%;
+
 	}
 </style>

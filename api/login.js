@@ -40,10 +40,19 @@ const getforget = (data) => {
 		data
 	})
 }
+//获取退出登录接口数据
+const getLoginOut = () => {
+	return request({
+		url: "/mobile/logout",
+		method: 'POST',
+
+	})
+}
 export default {
 	getUserLogin,
 	getUserSing,
 	getBindPhone,
 	getChangeCode,
-	getforget
+	getforget,
+	getLoginOut
 }

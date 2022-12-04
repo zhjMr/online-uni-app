@@ -109,7 +109,16 @@
 			}
 
 		}
-	],
+	    ,{
+            "path" : "pages/user-safe/user-safe",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "修改密码",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"tabBar": {
 		"selectedColor": "#2c2c2c",
 		"list": [{

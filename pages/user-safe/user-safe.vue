@@ -1,6 +1,6 @@
 <template>
 	<view>
-		我的优惠
+		修改密码页面
 	</view>
 </template>
 
@@ -8,11 +8,11 @@
 	export default {
 		data() {
 			return {
-
+				
 			}
 		},
 		methods: {
-
+			
 		}
 	}
 </script>
