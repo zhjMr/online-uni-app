@@ -52,12 +52,12 @@
 		}, {
 			"path": "pages/auth/login",
 			"style": {
-			"app-plus": {
-				"titleNView": {
-					"type": "transparent"
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent"
+					}
 				}
-			}
-				
+
 			}
 
 		},
@@ -82,6 +82,30 @@
 			"style": {
 				"navigationBarTitleText": "收藏",
 				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/forget/forget",
+			"style": {
+				"navigationBarTitleText": "找回密码",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent"
+					}
+				}
+			}
+
+		}, {
+			"path": "pages/bind-phone/bind-phone",
+			"style": {
+				"navigationBarTitleText": "绑定手机号",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent"
+					}
+				}
 			}
 
 		}

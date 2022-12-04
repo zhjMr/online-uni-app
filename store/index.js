@@ -30,11 +30,11 @@ const store = new Vuex.Store({
 				username
 			} = data
 			// 判断用户信息是否有值
-			if (username) {
+			if (data) {
 				// 将用户信息存储到vuex
-				state.username = username
+				state.userInfo = data
 				// 将用户信息存储到本地
-				uni.setStorageSync(USER_INFO_KEY, username)
+				uni.setStorageSync(USER_INFO_KEY, data)
 			}
 			// 判断token是否存在
 			if (token) {
@@ -47,7 +47,7 @@ const store = new Vuex.Store({
 		//退出登录
 		logout(state) {
 			// 清空vuex里面存储的用户信息token
-			state.username = {}
+			state.userInfo = {}
 			state.accessToken = ""
 			// 清空本地存储的用户信息token
 			uni.removeStorageSync(USER_INFO_KEY)
