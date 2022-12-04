@@ -15,7 +15,13 @@ export default {
 				})
 				return
 			}
-
+			//用户没有绑定手机号就跳转到绑定手机号页面
+			if (!this.$store.state.userInfo.phone && options.login) {
+				uni.navigateTo({
+					url: "/pages/bind-phone/bind-phone"
+				})
+				return
+			}
 			uni.navigateTo({
 				url
 			})
@@ -28,6 +34,6 @@ export default {
 			})
 		},
 
-	
+
 	}
 }
