@@ -113,7 +113,7 @@
 						this.$util.msg('登录成功')
 						//登录成功清除输入框内容
 						this.from = {}
-						//把永辉的信息保存到vuex
+						//把用户的信息保存到vuex
 						this.$store.commit('setToken', response.data.data)
 						//登录成功判断用户是否输入了手机号
 						if (response.data.data.phone) {

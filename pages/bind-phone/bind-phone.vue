@@ -17,6 +17,10 @@
 	import loginfrom from "@/pages/auth/components/loginfrom.vue"
 	//引入api 
 	import loginUserpi from "@/api/login.js"
+	//引入用户信息 
+	import {
+		mapState
+	} from "vuex"
 	export default {
 		components: {
 			loginfrom
@@ -45,6 +49,9 @@
 				}]
 			}
 		},
+		computed: {
+			...mapState(['userInfo'])
+		},
 		methods: {
 			//绑定手机号触发的事件
 			async handleClickBound() {
@@ -55,10 +62,13 @@
 				})
 				try {
 					const response = await loginUserpi.getBindPhone(this.from)
-					// console.log(response);
+					console.log(response);
 					if (response.data.msg == "ok") {
 						uni.hideLoading()
 						this.$util.msg('绑定成功')
+
+						this.userInfo.phone = this.from.phone
+						uni.setStorageSync("userInfo", this.userInfo)
 						//绑定成功清除输入框内容
 						this.from = {}
 						//绑定成功跳转我的页面

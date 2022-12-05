@@ -6,7 +6,7 @@
 
 		<view class="text-user" v-if="hasLogin" >
 			<view class="viewLog">
-				<text class="mastafter"> {{userInfo.username}}</text>
+				<text class="mastafter"> {{userInfo.nickname || userInfo.username }}</text>
 				<text class="perpetual">永久会员</text>
 			</view>
 			<view>暂无描述</view>
@@ -52,7 +52,9 @@
 			},
 			//登录点击跳转编辑资料页面事件
 			handleChangeOk() {
-				this.navTo('/pages/user-info/user-info')
+				if (this.hasLogin) {
+					this.navTo('/pages/user-info/user-info')
+				}
 			}
 		},
 

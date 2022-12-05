@@ -21,7 +21,7 @@ export default () => {
 		{
 			id: "4",
 			title: '手机',
-			text: '132***2195'
+			text: ''
 		}
 	]
 }

@@ -10,6 +10,10 @@
 	import optionsUser from "@/pages/my/components/options.vue"
 	//引入编辑资料模拟的数据
 	import editPut from "@/config/my/editData.js"
+	//引入vuex辅助函数
+	import {
+		mapState
+	} from "vuex"
 	export default {
 		props: {
 			navData: {
@@ -28,8 +32,20 @@
 
 			}
 		},
+		computed: {
+			...mapState(['userInfo'])
+		},
+		onLoad() {
+			this.stateAlter()
+		},
 		methods: {
-
+			stateAlter() {
+				this.navData.forEach(item => {
+					if (item.title == "手机") {
+						item.text = this.userInfo.phone
+					}
+				})
+			}
 		}
 	}
 </script>

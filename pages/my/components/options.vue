@@ -66,6 +66,10 @@
 						}
 					});
 				}
+				//绑定手机号
+				if (data.title == "手机") {
+					this.navTo("/pages/bind-phone/bind-phone")
+				}
 			},
 		}
 	}
