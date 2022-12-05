@@ -14,7 +14,7 @@
 				<view v-if="item.fotIcon" class="right"></view>
 				<text v-if="item.text">{{item.text}}</text>
 				<view v-if="item.image" class="topImg">
-					<image :src="item.image" mode=""></image>
+					<image src="../../../static/noLogin.png" mode=""></image>
 				</view>
 			</view>
 

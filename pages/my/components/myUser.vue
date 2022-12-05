@@ -1,10 +1,10 @@
 <template>
-	<view class="myuserBox">
+	<view class="myuserBox" @click="handleChangeOk">
 		<view class="topImg">
 			<image src="../../../static/noLogin.png" mode=""></image>
 		</view>
 
-		<view class="text-user" v-if="hasLogin">
+		<view class="text-user" v-if="hasLogin" >
 			<view class="viewLog">
 				<text class="mastafter"> {{userInfo.username}}</text>
 				<text class="perpetual">永久会员</text>
@@ -23,7 +23,7 @@
 
 
 
-		<text class="iconfont icon-leimupinleifenleileibie text-white"></text>
+		<text class="iconfont icon-leimupinleifenleileibie text-white" ></text>
 	</view>
 
 </template>
@@ -49,8 +49,13 @@
 			//点击立即登录跳转登录
 			handleLoginOf() {
 				this.navTo("/pages/auth/login")
+			},
+			//登录点击跳转编辑资料页面事件
+			handleChangeOk() {
+				this.navTo('/pages/user-info/user-info')
 			}
-		}
+		},
+
 	}
 </script>
 
