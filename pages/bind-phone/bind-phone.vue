@@ -66,8 +66,9 @@
 					if (response.data.msg == "ok") {
 						uni.hideLoading()
 						this.$util.msg('绑定成功')
-
-						this.userInfo.phone = this.from.phone
+						//手机号进行加密处理
+						let reg = /(\d{3})\d{4}(\d{4})/; //正则表达式
+						this.userInfo.phone = this.from.phone.replace(reg, "$1****$2")
 						uni.setStorageSync("userInfo", this.userInfo)
 						//绑定成功清除输入框内容
 						this.from = {}
