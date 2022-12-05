@@ -48,11 +48,20 @@ const getLoginOut = () => {
 
 	})
 }
+//获取修改密码接口数据
+const getUpdataPass = (data) => {
+	return request({
+		url: "/mobile/update_password",
+		method: 'POST',
+		data
+	})
+}
 export default {
 	getUserLogin,
 	getUserSing,
 	getBindPhone,
 	getChangeCode,
 	getforget,
-	getLoginOut
+	getLoginOut,
+	getUpdataPass
 }

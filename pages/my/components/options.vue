@@ -9,6 +9,8 @@
 			</view>
 
 			<view>
+				<input v-if="item.input" type="text" class="inputnone" placeholder-style="color: #C0C0C0"
+					:placeholder="item.placeholder" v-model="value[item.prop]">
 				<view v-if="item.fotIcon" class="right"></view>
 				<text v-if="item.text">{{item.text}}</text>
 				<view v-if="item.image" class="topImg">
@@ -25,6 +27,10 @@
 	import NavDataList from "@/config/my/setdiscount.js"
 	export default {
 		props: {
+			value: {
+				type: Object,
+				default: () => {}
+			},
 			navData: {
 				type: Array,
 				default: NavDataList
@@ -45,8 +51,22 @@
 						login: data.isLogin
 					})
 				}
-
-			}
+				//判断点击的是否是清除缓存
+				if (data.title == "清除缓存") {
+					uni.showModal({
+						title: '是否要清除缓存?',
+						success: (res) => {
+							if (res.confirm) {
+								uni.clearStorageSync()
+								this.$set(data, "text", "0kb")
+								this.$util.msg("清除成功")
+							} else if (res.cancel) {
+								console.log('用户点击取消');
+							}
+						}
+					});
+				}
+			},
 		}
 	}
 </script>
@@ -102,5 +122,10 @@
 			height: 100%;
 		}
 
+	}
+
+	.inputnone {
+
+		width: 200rpx;
 	}
 </style>

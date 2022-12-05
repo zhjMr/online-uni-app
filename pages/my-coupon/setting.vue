@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<optionsSet :navData="navData"></optionsSet>
-		<button class="buttons" @click="handleLoginOut">退出登录</button>
+		<button class="buttons" @click="handleLoginOut" v-if="hasLogin">退出登录</button>
 	</view>
 </template>
 
@@ -12,6 +12,10 @@
 	import mysetting from "@/config/my/setting.js"
 	//引入api
 	import LoginApi from "@/api/login.js"
+	//引入vuex辅助函数
+	import {
+		mapGetters
+	} from "vuex"
 	export default {
 		props: {
 			navData: {
@@ -26,6 +30,10 @@
 			return {
 
 			}
+		},
+		computed: {
+			//获取登录状态
+			...mapGetters(['hasLogin'])
 		},
 		methods: {
 			handleLoginOut() {

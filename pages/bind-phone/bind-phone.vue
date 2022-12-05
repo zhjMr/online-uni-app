@@ -61,10 +61,8 @@
 						this.$util.msg('绑定成功')
 						//绑定成功清除输入框内容
 						this.from = {}
-						//绑定成功跳转我的页面
-						uni.switchTab({
-							url: "/pages/my/my"
-						})
+						//绑定成功跳转登录页面重新登录
+						this.navTo("/pages/auth/login")
 					} else {
 						//请求数据进行提示
 						this.$util.msg(response.data.data)
