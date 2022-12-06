@@ -22,7 +22,7 @@
 
 			</view>
 		</view>
-		<image :src="imageList" ></image>
+		<image :src="imageList" mode="aspectFill" ></image>
 	</view>
 </template>
 
@@ -115,6 +115,6 @@
 
 	image {
 		width: 100%;
-		height: 300rpx;
+		height: 360rpx;
 	}
 </style>
