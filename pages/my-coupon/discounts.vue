@@ -16,6 +16,9 @@
 				</view>
 			</view>
 		</view>
+		<view class="title">
+			没有更多数据了
+		</view>
 	</view>
 </template>
 
@@ -38,6 +41,10 @@
 		onLoad() {
 			//调用优惠卷数据
 			this.getDiscountsList()
+		},
+		// 下拉刷新
+		onPullDownRefresh() {
+			uni.stopPullDownRefresh(); //停止刷新
 		},
 		methods: {
 			//获取优惠卷数据
@@ -108,5 +115,15 @@
 
 	.active {
 		background-color: #d39e00 !important;
+	}
+
+	.title {
+		width: 100%;
+		height: 150rpx;
+		line-height: 150rpx;
+		text-align: center;
+		font-size: 30rpx;
+		color: #666;
+
 	}
 </style>

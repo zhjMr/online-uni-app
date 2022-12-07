@@ -66,6 +66,8 @@
 						//请求成功关闭loading
 						this.$util.msg('领取成功')
 						item.isgetcoupon = true
+					} else {
+						this.$util.msg(response.data.data)
 					}
 				} catch (e) {
 					console.log(e);
