@@ -13,15 +13,33 @@ const getdiscount = () => {
 		method: "GET"
 	})
 }
-//获取拼团接口板数据
+//获取拼团接口数据
 const getgroup = () => {
 	return request({
 		url: "/mobile/group",
 		method: "GET"
 	})
 }
+//领取优惠卷接口数据
+const getDown = (data) => {
+	return request({
+		url: "/mobile/user_coupon/receive",
+		method: "POST",
+		data
+	})
+}
+//优惠卷页面接口
+const discounts = (data) => {
+	return request({
+		url: '/mobile/user_coupon',
+		method: "GET",
+		data
+	})
+}
 export default {
 	getBannerList,
 	getdiscount,
-	getgroup
+	getgroup,
+	getDown,
+	discounts
 }

@@ -62,7 +62,7 @@
 			async getIndexList() {
 				try {
 					const response = await IndexApi.getBannerList()
-					console.log(response, '首页数据');
+					// console.log(response, '首页数据');
 					let res = response.data.data
 					//取出轮播图数据
 					this.BannerList = res[1].data
@@ -81,7 +81,7 @@
 			async getdiscount() {
 				try {
 					const response = await IndexApi.getdiscount()
-					// console.log(response, '优惠券');
+					console.log(response, '优惠券');
 					this.discountsList = response.data.data
 				} catch (e) {
 					console.log(e);
@@ -92,7 +92,7 @@
 			async getgroupList() {
 				try {
 					const response = await IndexApi.getgroup()
-					console.log(response, '拼团');
+					// console.log(response, '拼团');
 					this.groupList = response.data.data.rows
 				} catch (e) {
 					console.log(e);

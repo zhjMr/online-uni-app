@@ -9,7 +9,6 @@ import {
 
 const store = new Vuex.Store({
 	state: {
-		content: "你好",
 		// 用户信息
 		userInfo: uni.getStorageSync(USER_INFO_KEY) || {},
 		// 用户登录token

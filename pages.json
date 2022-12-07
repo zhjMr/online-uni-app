@@ -39,14 +39,8 @@
 				}
 			}
 
-		}, {
-			"path": "pages/my-coupon/discounts",
-			"style": {
-				"navigationBarTitleText": "我的优惠",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
+		}, 
+		{
 			"path": "pages/my-coupon/setting",
 			"style": {
 				"navigationBarTitleText": "设置",
@@ -134,7 +128,16 @@
 			}
 
 		}
-	],
+	    ,{
+            "path" : "pages/my-coupon/discounts",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的优惠卷",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"tabBar": {
 		"selectedColor": "#2c2c2c",
 		"list": [{
