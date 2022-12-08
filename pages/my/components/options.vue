@@ -9,7 +9,7 @@
 			</view>
 
 			<view>
-				<input v-if="item.input" type="text" class="inputnone" placeholder-style="color: #C0C0C0"
+				<input dir="rtl" v-if="item.input" type="text" class="inputnone" placeholder-style="color: #C0C0C0"
 					:placeholder="item.placeholder" v-model="value[item.prop]">
 				<view v-if="item.fotIcon" class="right"></view>
 				<text v-if="item.text">{{item.text}}</text>
@@ -130,6 +130,6 @@
 
 	.inputnone {
 
-		width: 200rpx;
+		width: 300rpx;
 	}
 </style>

@@ -57,6 +57,11 @@
 			//调用拼团列表数据
 			this.getgroupList()
 		},
+		//监听原生标题栏输入框点击事件
+		onNavigationBarSearchInputClicked() {
+			// console.log(111, '搜索框');
+			this.navTo("/pages/search/search")
+		},
 		methods: {
 			//获取首页收据
 			async getIndexList() {
@@ -81,7 +86,7 @@
 			async getdiscount() {
 				try {
 					const response = await IndexApi.getdiscount()
-					console.log(response, '优惠券');
+					// console.log(response, '优惠券');
 					this.discountsList = response.data.data
 				} catch (e) {
 					console.log(e);
