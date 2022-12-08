@@ -56,7 +56,7 @@ const store = new Vuex.Store({
 		},
 		//清除历史记录
 		historywordClear(state) {
-			//青口vuex的历史记录
+			//青空uex的历史记录
 			state.historyword = []
 			//清空本地的历史记录
 			uni.removeStorageSync('historyword')

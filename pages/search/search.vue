@@ -46,7 +46,9 @@
 					content: '是否要清除历史记录',
 					success: (res) => {
 						if (res.confirm) {
+							//将数据进行清空
 							this.$store.commit('historywordClear')
+							this.historywords = []
 							console.log('用户点击确定');
 						} else if (res.cancel) {
 							console.log('用户点击取消');
@@ -63,7 +65,7 @@
 				this.historywords.push(this.text)
 				// 将数据传递到vuex
 				this.$store.commit("historyword", this.historywords)
-				
+
 			}
 		},
 		computed: {
