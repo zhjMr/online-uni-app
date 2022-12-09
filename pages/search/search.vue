@@ -65,7 +65,8 @@
 				this.historywords.push(this.text)
 				// 将数据传递到vuex
 				this.$store.commit("historyword", this.historywords)
-
+				//跳转到搜索内容页面
+				this.navTo(`/pages/search-result/search-result?keyword=${this.text}`)
 			}
 		},
 		computed: {
@@ -105,6 +106,12 @@
 			font-size: 16rpx;
 			background-color: #dae0e5;
 			border-radius: 50rpx;
+			overflow: hidden; //超出隐藏
+			white-space: nowrap; //不折行
+			text-overflow: ellipsis; //溢出显示省略号
+
+
+
 		}
 	}
 </style>
