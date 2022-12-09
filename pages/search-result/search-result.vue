@@ -17,7 +17,7 @@
 				<scroll-view scroll-y="true" class="scroll-view-height list-content">
 					<view>
 						<!-- 专栏列表 -->
-						<special></special>
+						<special :columnList="columnList"></special>
 					</view>
 				</scroll-view>
 			</swiper-item>
@@ -49,8 +49,10 @@
 				keyword: '',
 				page: 1,
 				type: "course",
-
-				courseList: []
+                
+				courseList: [],//课程列表数据
+				columnList:[],//专栏列表数据
+				
 			}
 		},
 		//监听原生输入框点击事件
@@ -60,7 +62,10 @@
 		onLoad(option) {
 			//跳转传递的搜索关键字
 			this.keyword = option.keyword
+			//调用课程列表
 			this.getSearchList()
+			//调用专栏列表
+			this.getSearchcolumn()
 		},
 		computed: {
 
@@ -90,8 +95,27 @@
 						page,
 						type
 					})
-					console.log(response);
+					console.log(response,'课程列表数据');
 					this.courseList = response.data.data.rows
+				} catch (e) {
+					console.log(e);
+					//TODO handle the exception
+				}
+			},
+			async getSearchcolumn() {
+				try {
+					let {
+						keyword,
+						page,
+						type
+					} = this
+					const response = await searchApi.getSearchInput({
+						keyword,
+						page,
+						type: "column"
+					})
+					console.log(response,'专栏列表数据');
+					this.columnList = response.data.data.rows
 				} catch (e) {
 					console.log(e);
 					//TODO handle the exception
