@@ -7,6 +7,15 @@ const getSearchInput = (data) => {
 		data
 	})
 }
+//获取详情接口数据
+const getcourse = (data) => {
+	return request({
+		url: "/mobile/course/read",
+		method: "GET",
+		data
+	})
+}
 export default {
-	getSearchInput
+	getSearchInput,
+	getcourse
 }

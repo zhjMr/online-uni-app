@@ -6,7 +6,7 @@
 		</view>
 
 		<view class="group">
-			<view class="grouplist" v-for="(item,index) in NewList" :key="index">
+			<view class="grouplist" v-for="(item,index) in NewList" :key="index" @click="handleChangeNew(item)">
 				<view class="images">
 					<image :src="item.cover" mode=""></image>
 				</view>
@@ -22,7 +22,7 @@
 
 			</view>
 		</view>
-		<image :src="imageList" mode="aspectFill" ></image>
+		<image :src="imageList" mode="aspectFill"></image>
 	</view>
 </template>
 
@@ -35,12 +35,18 @@
 			},
 			imageList: {
 				type: String,
-				default:""
+				default: ""
 			}
 		},
 		data() {
 			return {
 
+			}
+		},
+		methods: {
+			//点击最新列表触发的事件
+			handleChangeNew(item) {
+				this.navTo(`/pages/course/course?id=${item.id}`)
 			}
 		}
 	}
