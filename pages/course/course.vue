@@ -1,17 +1,26 @@
 <template>
 	<view>
-		<datailfor :courseList="courseList"></datailfor>
+
+		<view v-if="group.group_id">
+			<groupFor></groupFor>
+		</view>
+		<view v-else>
+			<datailfor :courseList="courseList"></datailfor>
+		</view>
 	</view>
 </template>
 
 <script>
 	//引入详情页组件
 	import datailfor from "@/pages/course/components/detail.vue"
+	//引入拼团详情组件
+	import groupFor from "@/pages/course/components/group.vue"
 	//引入api
 	import courseApi from "@/api/search.js"
 	export default {
 		components: {
-			datailfor
+			datailfor,
+			groupFor
 		},
 		data() {
 			return {
