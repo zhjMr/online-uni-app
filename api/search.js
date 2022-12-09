@@ -15,7 +15,16 @@ const getcourse = (data) => {
 		data
 	})
 }
+//获取拼团详情接口数据
+const getgroup = (data) => {
+	return request({
+		url: "/mobile/group_work/list",
+		method: "GET",
+		data
+	})
+}
 export default {
 	getSearchInput,
-	getcourse
+	getcourse,
+	getgroup
 }

@@ -96,8 +96,8 @@
 			//获取拼团数据
 			async getgroupList() {
 				try {
-					const response = await IndexApi.getgroup()
-					// console.log(response, '拼团');
+					const response = await IndexApi.getgroup({usable: 1})
+					console.log(response, '拼团');
 					this.groupList = response.data.data.rows
 				} catch (e) {
 					console.log(e);

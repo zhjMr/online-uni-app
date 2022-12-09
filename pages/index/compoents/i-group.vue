@@ -6,7 +6,7 @@
 
 		<view class="group">
 
-			<view class="grouplist" v-for="(item,index) in groupList" :key="index">
+			<view class="grouplist" v-for="(item,index) in groupList" :key="index" @click="handleChangeNew(item)">
 				<view class="images">
 					<image :src="item.cover" mode=""></image>
 				</view>
@@ -19,7 +19,7 @@
 				</view>
 			</view>
 		</view>
-			<view class="eee"></view>
+		<view class="eee"></view>
 	</view>
 </template>
 
@@ -33,9 +33,16 @@
 		},
 		data() {
 			return {
-
+				
+			}
+		},
+		methods: {
+			//点击拼团列表触发的事件
+			handleChangeNew(item) {
+				this.navTo(`/pages/course/course?id=${item.id}&group_id=${item.group_id}`)
 			}
 		}
+
 	}
 </script>
 
@@ -43,7 +50,7 @@
 	.group {
 		margin-top: 10rpx;
 		display: flex;
-		overflow-y:hidden;
+		overflow-y: hidden;
 
 		.grouplist {
 			width: 343rpx;
@@ -88,7 +95,8 @@
 		font-size: 34rpx;
 		font-weight: bold;
 	}
-	.eee{
+
+	.eee {
 		height: 15rpx;
 		width: 100%;
 		background-color: #eee;

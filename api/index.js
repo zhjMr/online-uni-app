@@ -14,10 +14,11 @@ const getdiscount = () => {
 	})
 }
 //获取拼团接口数据
-const getgroup = () => {
+const getgroup = (data) => {
 	return request({
 		url: "/mobile/group",
-		method: "GET"
+		method: "GET",
+		data
 	})
 }
 //领取优惠卷接口数据
