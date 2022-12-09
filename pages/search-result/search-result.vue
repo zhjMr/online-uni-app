@@ -7,15 +7,17 @@
 		<swiper class="scroll-view-height" @change="swipeIndex" :current="current" :duration="300">
 			<swiper-item>
 				<scroll-view scroll-y="true" class="scroll-view-height list-content">
-					<view >
-						课程列表
+					<view>
+						<!-- 课程列表 -->
+						<courseTo :courseList="courseList"></courseTo>
 					</view>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
 				<scroll-view scroll-y="true" class="scroll-view-height list-content">
-					<view >
-						专栏列表
+					<view>
+						<!-- 专栏列表 -->
+						<special></special>
 					</view>
 				</scroll-view>
 			</swiper-item>
@@ -24,6 +26,11 @@
 </template>
 
 <script>
+	//引入专栏列表组件
+	import special from "@/pages/search-result/components/i-special.vue"
+	//引入课程列表组件
+	import courseTo from "@/pages/search-result/components/i-course.vue"
+	//引入tabbar组件
 	import NavTab from "@/components/tabBar/tabBar.vue"
 	//引入api 
 	import searchApi from "@/api/search.js"
@@ -31,7 +38,9 @@
 
 	export default {
 		components: {
-			NavTab
+			NavTab,
+			courseTo,
+			special
 		},
 		data() {
 			return {
@@ -39,7 +48,9 @@
 				current: 0,
 				keyword: '',
 				page: 1,
-				type: "course"
+				type: "course",
+
+				courseList: []
 			}
 		},
 		//监听原生输入框点击事件
@@ -80,6 +91,7 @@
 						type
 					})
 					console.log(response);
+					this.courseList = response.data.data.rows
 				} catch (e) {
 					console.log(e);
 					//TODO handle the exception
