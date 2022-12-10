@@ -1,8 +1,7 @@
 <template>
 	<view>
-
 		<view v-if="group.group_id">
-			<groupFor></groupFor>
+			<groupFor :courseList="courseList" :groupList="groupList"></groupFor>
 		</view>
 		<view v-else>
 			<datailfor :courseList="courseList"></datailfor>
@@ -35,9 +34,11 @@
 					group_id: 0,
 				},
 				courseList: {}, //详情列表数据
+				groupList: {}, //拼团列表数据
 			}
 		},
 		onLoad(options) {
+
 			this.group.group_id = options.group_id
 			this.datai.id = options.id
 			//调用课程详情列表数据
@@ -51,6 +52,7 @@
 				try {
 					const response = await courseApi.getgroup(this.group)
 					console.log(response, '拼团详情');
+					this.groupList = response.data.data.rows[0]
 				} catch (e) {
 					console.log(e);
 					//TODO handle the exception
@@ -62,6 +64,10 @@
 					const response = await courseApi.getcourse(this.datai)
 					this.courseList = response.data.data
 					console.log(response, '课程详情列表数据');
+					//动态设置标题栏的方法
+					uni.setNavigationBarTitle({
+						title: response.data.data.title
+					})
 					if (response.data.data == "该记录不存在") {
 						this.$util.msg(response.data.data)
 						setTimeout(() => {

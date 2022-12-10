@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view>
+		<view class="contents">
 			<view class="iamg">
 				<image :src="courseList.cover" mode=""></image>
 			</view>
@@ -22,7 +22,16 @@
 				</view>
 			</view>
 		</view>
-
+		<view class="special">
+			专栏简介
+		</view>
+		<view class="content" v-html="courseList.try">
+		</view>
+		<view class="bottom">
+		</view>
+		<view class="buttonBottom">
+			<button>立即订购￥{{courseList.price}}</button>
+		</view>
 	</view>
 </template>
 
@@ -32,14 +41,14 @@
 			courseList: {
 				type: Object,
 				default: () => {}
-			}
+			},
 		},
 		data() {
 			return {
 
 			}
 		},
-		onLoad(options) {
+		onLoad() {
 
 		},
 		methods: {
@@ -48,7 +57,15 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+	.contents{
+		border-bottom: 14rpx solid #eee;
+	}
+	.special{
+		padding: 30rpx;
+		border-bottom: 1rpx solid #eee;
+		margin-bottom: 20rpx;
+	}
 	.iamg {
 		width: 100%;
 		height: 422rpx;
@@ -95,5 +112,34 @@
 
 			}
 		}
+	}
+.content{
+	padding: 0 30rpx;
+}
+	::v-deep img {
+		margin: auto;
+		width: 100% !important;
+		
+		
+	}
+	.bottom{
+		width: 100%;
+		height: 200rpx;
+		padding: 0 30rpx;
+		border-top: 6rpx solid #666;
+	}
+	.buttonBottom{
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		background-color: #fff;
+		padding: 30rpx;
+		border-top: 1rpx solid #eee;
+		button{
+			background-color: #5ccc84;
+			color: #fff;
+		}
+		
 	}
 </style>
