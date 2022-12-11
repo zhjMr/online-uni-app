@@ -1,10 +1,7 @@
 <template>
 	<view>
-		<view v-if="group.group_id">
-			<groupFor :courseList="courseList" :groupList="groupList"></groupFor>
-		</view>
-		<view v-else>
-			<datailfor :courseList="courseList"></datailfor>
+		<view>
+			<datailfor :courseList="courseList" :group_id="group_id"></datailfor>
 		</view>
 	</view>
 </template>
@@ -12,14 +9,11 @@
 <script>
 	//引入详情页组件
 	import datailfor from "@/pages/course/components/detail.vue"
-	//引入拼团详情组件
-	import groupFor from "@/pages/course/components/group.vue"
 	//引入api
 	import courseApi from "@/api/search.js"
 	export default {
 		components: {
 			datailfor,
-			groupFor
 		},
 		data() {
 			return {
@@ -29,35 +23,17 @@
 					group_id: 0,
 					flashsale_id: 0,
 				},
-				group: {
-					page: 1,
-					group_id: 0,
-				},
 				courseList: {}, //详情列表数据
-				groupList: {}, //拼团列表数据
+				group_id: 0
 			}
 		},
 		onLoad(options) {
-
-			this.group.group_id = options.group_id
+			this.group_id = options.group_id
 			this.datai.id = options.id
 			//调用课程详情列表数据
 			this.getCourseList()
-			//调用拼团详情数据
-			this.getgroupList()
 		},
 		methods: {
-			//获取拼团列表数据
-			async getgroupList() {
-				try {
-					const response = await courseApi.getgroup(this.group)
-					console.log(response, '拼团详情');
-					this.groupList = response.data.data.rows[0]
-				} catch (e) {
-					console.log(e);
-					//TODO handle the exception
-				}
-			},
 			//获取课程详情列表数据
 			async getCourseList() {
 				try {
