@@ -8,6 +8,10 @@
 
 			<view class="grouplist" v-for="(item,index) in groupList" :key="index" @click="handleChangeNew(item)">
 				<view class="images">
+					<view class="autoView" v-if="item.type=='video'">视频</view>
+					<view class="autoView" v-if="item.type=='media'">图文</view>
+					<view class="autoView" v-if="item.type=='column'">专栏</view>
+					<view class="autoView" v-if="item.type=='audio'">音频</view>
 					<image :src="item.cover" mode=""></image>
 				</view>
 				<view class="text">
@@ -18,6 +22,7 @@
 					<text>￥{{item.t_price}}</text>
 				</view>
 			</view>
+
 		</view>
 		<view class="eee"></view>
 	</view>
@@ -33,13 +38,18 @@
 		},
 		data() {
 			return {
-				
+
 			}
 		},
 		methods: {
 			//点击拼团列表触发的事件
 			handleChangeNew(item) {
-				this.navTo(`/pages/course/course?id=${item.id}&group_id=${item.group_id}`)
+				if (item.type == "column") {
+					this.navTo(`/pages/column/column?id=${item.id}&group_id=${item.group_id}`)
+				} else {
+					this.navTo(`/pages/course/course?id=${item.id}&group_id=${item.group_id}`)
+				}
+
 			}
 		}
 
@@ -48,6 +58,7 @@
 
 <style lang="scss">
 	.group {
+
 		margin-top: 10rpx;
 		display: flex;
 		overflow-y: hidden;
@@ -59,6 +70,7 @@
 			margin-left: 20rpx;
 
 			.images {
+				position: relative;
 				width: 343rpx;
 				height: 192rpx;
 
@@ -100,5 +112,16 @@
 		height: 15rpx;
 		width: 100%;
 		background-color: #eee;
+	}
+
+	.autoView {
+		font-size: 16rpx;
+		padding: 5rpx;
+		background-color: rgba(0, 0, 0, 0.3);
+		position: absolute;
+		color: #fff;
+		bottom: 10rpx;
+		z-index: 999;
+		right: 10rpx;
 	}
 </style>

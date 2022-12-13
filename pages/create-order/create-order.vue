@@ -2,23 +2,23 @@
 	<view>
 
 		<view class="group">
-			<view class="grouplist">
+			<view class="grouplist" @click="handleChandeOrder">
 				<view class="images">
-					<image src="../../static/demo/cover/1.png" mode=""></image>
+					<image :src="createObject.cover" mode=""></image>
 				</view>
 				<view class="right-title">
 					<view class="text">
-						海骏达三大件大家按时间段多看看
+						{{createObject.title}}
 					</view>
 					<view class="price">
-						<text>￥9.98</text>
+						<text>￥{{createObject.price}}</text>
 					</view>
 				</view>
 			</view>
 		</view>
-		<view class="card"  hover-class="active">
+		<view class="card" hover-class="active">
 			<text>优惠卷</text>
-			<view class="noData" >
+			<view class="noData">
 				<text>暂无可用</text>
 				<uni-icons type="forward" size="20" color="#ccc"></uni-icons>
 			</view>
@@ -29,23 +29,51 @@
 			<view class="noData">
 				<text style="color: #5ccc84;">微信支付</text>
 			</view>
-		
+
 		</view>
 		<view class="buttonBottom">
-			<button >立即购买￥9.98</button>
+			<button>立即购买￥{{createObject.price}}</button>
 		</view>
 	</view>
 </template>
 
 <script>
+	//引入api
+	import createGroupApi from "@/api/group.js"
 	export default {
 		data() {
 			return {
-
+				typeFrom: {
+					id: "",
+					type: ""
+				},
+				//创建订单数据
+				createObject: {}
 			}
 		},
+		onLoad(options) {
+			this.typeFrom.id = options.id
+			this.typeFrom.type = options.type
+			// 调用创建订单数据列表
+			this.grtCreateOrder()
+		},
 		methods: {
-
+			//点击订单页触发的事件
+			handleChandeOrder() {
+				// console.log('点击了');
+				this.navTo(`/pages/course/course?id=${this.typeFrom.id}`)
+			},
+			//获取创建订单接口数据
+			async grtCreateOrder() {
+				try {
+					const response = await createGroupApi.getCarterGroup(this.typeFrom)
+					console.log(response, '创建订单');
+					this.createObject = response.data.data
+				} catch (e) {
+					console.log(e);
+					//TODO handle the exception
+				}
+			}
 		}
 	}
 </script>
@@ -105,9 +133,11 @@
 		padding: 30rpx;
 		border-bottom: 1rpx solid #eee;
 	}
-	.active{
+
+	.active {
 		background-color: #eee !important;
 	}
+
 	.buttonBottom {
 		position: fixed;
 		left: 0;
@@ -116,11 +146,11 @@
 		background-color: #fff;
 		padding: 30rpx;
 		border-top: 1rpx solid #eee;
-	
+
 		button {
 			background-color: #5ccc84;
 			color: #fff;
 		}
-	
+
 	}
 </style>

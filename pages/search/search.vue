@@ -62,7 +62,7 @@
 					this.$util.msg('请输入关键词')
 					return
 				}
-				this.historywords.push(this.text)
+				this.historywords.unshift(this.text)
 				// 将数据传递到vuex
 				this.$store.commit("historyword", this.historywords)
 				//跳转到搜索内容页面

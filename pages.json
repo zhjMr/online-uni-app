@@ -85,7 +85,7 @@
 		{
 			"path": "pages/my-muli/collect",
 			"style": {
-				"navigationBarTitleText": "收藏",
+				"navigationBarTitleText": "收藏列表",
 				"enablePullDownRefresh": false
 			}
 
@@ -190,6 +190,15 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "创建订单",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/column/column",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
             

@@ -1,6 +1,6 @@
 <template>
 	<view class="i-clurse">
-		<view class="courseList" v-for="(item,index) in columnList" :key="index">
+		<view class="courseList" v-for="(item,index) in columnList" :key="index" @click="handleclickdeail(item)">
 			<view class="iamg">
 				<image :src="item.cover" mode=""></image>
 			</view>
@@ -28,6 +28,13 @@
 		data() {
 			return {
 
+			}
+		},
+		methods:{
+			//点击专栏列表触发事件
+			handleclickdeail(item) {
+				//点击跳转专栏详情页面
+				this.navTo(`/pages/column/column?id=${item.id}`)
 			}
 		}
 	}

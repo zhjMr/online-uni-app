@@ -39,7 +39,7 @@
 					</view>
 				</view>
 				<view class="store">
-					<uni-icons type="star" size="30" @click="handleCollect" >
+					<uni-icons type="star" size="30" @click="handleCollect">
 					</uni-icons>
 				</view>
 			</view>
@@ -47,7 +47,7 @@
 		<view class="special">
 			专栏简介
 		</view>
-		<view class="content" v-html="courseList.try">
+		<view class="content" v-html="courseList.content">
 		</view>
 		<view class="bottom">
 		</view>
@@ -61,28 +61,44 @@
 	//引入api
 	import collectApi from "@/api/group.js"
 	export default {
-		props: {
-			courseList: {
-				type: Object,
-				default: () => {}
-			},
-			group_id: {
-				type: String,
-				default: ""
-			}
-		},
 		data() {
 			return {
+				datai: {
+					id: 0,
+					column_id: 0,
+					group_id: 0,
+					flashsale_id: 0,
+				},
+				courseList: {}, //详情列表数据
+				group_id: 0,
+
 				collectFrom: {
 					goods_id: "",
-					type: "course",
+					type: "column",
 				}
 			}
 		},
-		onLoad() {
-
+		onLoad(options) {
+			this.group_id = options.group_id
+			this.datai.id = options.id
+			//调用课程详情列表数据
+			this.getcolumn()
 		},
 		methods: {
+			//获取专栏列表数据
+			async getcolumn() {
+				try {
+					const response = await collectApi.getcolumn(this.datai)
+					console.log(response, '专栏数据');
+					this.courseList = response.data.data
+					uni.setNavigationBarTitle({
+						title: response.data.data.title
+					})
+				} catch (e) {
+					console.log(e);
+					//TODO handle the exception
+				}
+			},
 			//点击收藏icons 触发的方法
 			async handleCollect() {
 				try {
@@ -114,7 +130,7 @@
 					courseList
 				} = this
 				// console.log('订购');
-				this.navTo(`/pages/create-order/create-order?id=${courseList.id}&type=course`)
+				this.navTo(`/pages/create-order/create-order?id=${courseList.id}&type=column`)
 			},
 			//拼团订购触发的事件
 			handleClickPay() {

@@ -1,5 +1,6 @@
 <template>
 	<view>
+		
 		<!-- 自定义组件 -->
 		<nav-tab ref="tab" @change="swtichSwiper"></nav-tab>
 
@@ -49,15 +50,15 @@
 				keyword: '',
 				page: 1,
 				type: "course",
-                
-				courseList: [],//课程列表数据
-				columnList:[],//专栏列表数据
-				
+
+				courseList: [], //课程列表数据
+				columnList: [], //专栏列表数据
+
 			}
 		},
 		//监听原生输入框点击事件
 		onNavigationBarSearchInputClicked() {
-			this.navTo("/pages/search/search")
+			this.navBack()
 		},
 		onLoad(option) {
 			//跳转传递的搜索关键字
@@ -95,7 +96,7 @@
 						page,
 						type
 					})
-					console.log(response,'课程列表数据');
+					console.log(response, '课程列表数据');
 					this.courseList = response.data.data.rows
 				} catch (e) {
 					console.log(e);
@@ -114,7 +115,7 @@
 						page,
 						type: "column"
 					})
-					console.log(response,'专栏列表数据');
+					console.log(response, '专栏列表数据');
 					this.columnList = response.data.data.rows
 				} catch (e) {
 					console.log(e);
