@@ -1,24 +1,28 @@
 <template>
 	<view>
-		
+
 		<!-- 自定义组件 -->
 		<nav-tab ref="tab" @change="swtichSwiper"></nav-tab>
 
 		<!-- 当前滑块内容 -->
 		<swiper class="scroll-view-height" @change="swipeIndex" :current="current" :duration="300">
 			<swiper-item>
-				<scroll-view scroll-y="true" class="scroll-view-height list-content">
+				<scroll-view @scrolltolower="hendleChangeBottom" scroll-y="true"
+					class="scroll-view-height list-content">
 					<view>
 						<!-- 课程列表 -->
 						<courseTo :courseList="courseList"></courseTo>
+						<uni-load-more :status="loadMore"></uni-load-more>
 					</view>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view scroll-y="true" class="scroll-view-height list-content">
+				<scroll-view scroll-y="true" @scrolltolower="hendleChangeBottom"
+					class="scroll-view-height list-content">
 					<view>
 						<!-- 专栏列表 -->
 						<special :columnList="columnList"></special>
+						<uni-load-more :status="loadMore"></uni-load-more>
 					</view>
 				</scroll-view>
 			</swiper-item>
@@ -50,7 +54,7 @@
 				keyword: '',
 				page: 1,
 				type: "course",
-
+				loadMore: "more",
 				courseList: [], //课程列表数据
 				columnList: [], //专栏列表数据
 
@@ -72,6 +76,17 @@
 
 		},
 		methods: {
+			//下拉到底部触发的事件
+			hendleChangeBottom() {
+				if (this.type == "course") {
+					this.page++
+					this.getSearchList()
+				} else {
+					this.page++
+					this.getSearchcolumn()
+				}
+			},
+
 			swipeIndex(index) {
 				// 获得swiper切换后的current索引
 				this.$refs.tab.switchTab(index.detail.current)
@@ -97,7 +112,11 @@
 						type
 					})
 					console.log(response, '课程列表数据');
-					this.courseList = response.data.data.rows
+
+					this.courseList = this.page === 1 ? response.data.data.rows : [...this.courseList, ...response.data
+						.data.rows
+					]
+					this.loadMore = response.data.data.rows.length < 10 ? 'noMore' : 'more'
 				} catch (e) {
 					console.log(e);
 					//TODO handle the exception
@@ -116,7 +135,10 @@
 						type: "column"
 					})
 					console.log(response, '专栏列表数据');
-					this.columnList = response.data.data.rows
+					this.columnList = this.page === 1 ? response.data.data.rows : [...this.columnList, ...response.data
+						.data.rows
+					]
+					this.loadMore = response.data.data.rows.length < 10 ? 'noMore' : 'more'
 				} catch (e) {
 					console.log(e);
 					//TODO handle the exception
