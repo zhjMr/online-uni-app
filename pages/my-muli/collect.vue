@@ -1,19 +1,28 @@
 <template>
 	<view class="group">
-		<view class="grouplist" v-for="(item,index) in NewList" :key="index" @click="handleChangeNew(item)">
-			<view class="images">
-				<view class="autoView" v-if="item.goods.type=='video'">视频</view>
-				<view class="autoView" v-if="item.goods.type=='media'">图文</view>
-				<view class="autoView" v-if="item.goods.type=='column'">专栏</view>
-				<view class="autoView" v-if="item.goods.type=='audio'">音频</view>
-				<image :src="item.goods.cover" mode=""></image>
-			</view>
-			<view class="right-title">
-				<view class="text">
-					<text>{{item.goods.title}}</text>
+
+		<uni-swipe-action>
+			<uni-swipe-action-item v-for="(item, index) in NewList" :right-options="swipeList[0].options" :key="item.id"
+				@click="swipeClick(item)">
+				<view class="grouplist">
+					<view class="images">
+						<view class="autoView" v-if="item.goods.type=='video'">视频</view>
+						<view class="autoView" v-if="item.goods.type=='media'">图文</view>
+						<view class="autoView" v-if="item.goods.type=='column'">专栏</view>
+						<view class="autoView" v-if="item.goods.type=='audio'">音频</view>
+						<image :src="item.goods.cover" mode=""></image>
+					</view>
+					<view class="right-title">
+						<view class="text">
+							<text>{{item.goods.title}}</text>
+						</view>
+						<view class="view">{{item.goods.try}}</view>
+					</view>
 				</view>
-				<view class="view">{{item.goods.try}}</view>
-			</view>
+			</uni-swipe-action-item>
+		</uni-swipe-action>
+		<view class="titles">
+			没有更多数据了
 		</view>
 	</view>
 </template>
@@ -28,8 +37,15 @@
 					page: 1,
 					limit: 10
 				},
-				NewList: []
-
+				NewList: [],
+				swipeList: [{
+					options: [{
+						text: '取消收藏',
+						style: {
+							backgroundColor: 'rgb(255,58,49)'
+						}
+					}],
+				}, ]
 			}
 		},
 		onLoad() {
@@ -37,8 +53,30 @@
 			this.getCoolerList()
 		},
 		methods: {
-			handleChangeNew(item) {
+			//点击取消收藏触发的事件
+			async swipeClick(item) {
 
+				let goods_id = item.goods.id
+				let type = item.type
+				try {
+					uni.showLoading({
+						mask: true
+					})
+					const response = await fastGroupApi.getcollecOut({
+						goods_id,
+						type
+					})
+					uni.hideLoading()
+					if (response.data.msg == "ok") {
+						this.$util.msg('取消收藏成功')
+						this.getCoolerList()
+					}
+					console.log(response, 'response');
+				} catch (e) {
+					uni.hideLoading()
+					console.log(e);
+					//TODO handle the exception
+				}
 			},
 			//获取收藏列表数据
 			async getCoolerList() {
@@ -56,6 +94,10 @@
 </script>
 
 <style lang="scss">
+	.titles{
+		padding: 20rpx;
+		text-align: center;
+	}
 	.group {
 		margin-top: 20rpx;
 		width: 100%;

@@ -31,7 +31,7 @@
 			tabBarList: {
 				type: Array,
 				default: () => ([
-					"课程", '专栏'
+					"课程", '专栏',
 				])
 			}
 		},

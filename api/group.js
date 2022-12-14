@@ -31,9 +31,27 @@ const getcolumn = (data) => {
 		data
 	})
 }
+//获取取消收藏列表数据
+const getcollecOut = (data) => {
+	return request({
+		url: "/mobile/uncollect",
+		method: "POST",
+		data
+	})
+}
+//获取秒杀列表数据
+const getflashsale = (data) => {
+	return request({
+		url: "/mobile/flashsale",
+		method: "GET",
+		data
+	})
+}
 export default {
 	getCarterGroup,
 	getCartercollect,
 	getcollect,
-	getcolumn
+	getcolumn,
+	getcollecOut,
+	getflashsale
 }

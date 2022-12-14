@@ -175,30 +175,68 @@
 				}
 			}
 
+		}, {
+			"path": "pages/course/course",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/create-order/create-order",
+			"style": {
+				"navigationBarTitleText": "创建订单",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/column/column",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/list/list",
+			"style": {
+				"navigationBarTitleText": "拼团列表",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/seckill/seckill",
+			"style": {
+				"navigationBarTitleText": "秒杀列表",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/special/special",
+			"style": {
+				"navigationBarTitleText": "专栏列表",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/streaming/streaming",
+			"style": {
+				"navigationBarTitleText": "直播列表",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/books/books",
+			"style": {
+				"navigationBarTitleText": "电子书列表",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	    ,{
-            "path" : "pages/course/course",
+            "path" : "pages/test-list/test-list",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/create-order/create-order",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "创建订单",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/column/column",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "考场列表",
                 "enablePullDownRefresh": false
             }
             

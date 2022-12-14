@@ -97,7 +97,7 @@
 			async getgroupList() {
 				try {
 					const response = await IndexApi.getgroup({usable: 1})
-					console.log(response, '拼团');
+					// console.log(response, '拼团');
 					this.groupList = response.data.data.rows
 				} catch (e) {
 					console.log(e);
