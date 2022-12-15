@@ -67,7 +67,7 @@
 			async getIndexList() {
 				try {
 					const response = await IndexApi.getBannerList()
-					// console.log(response, '首页数据');
+					console.log(response, '首页数据');
 					let res = response.data.data
 					//取出轮播图数据
 					this.BannerList = res[1].data
