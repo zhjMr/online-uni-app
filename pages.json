@@ -237,7 +237,7 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "考场列表",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": true
             }
             
         }
@@ -246,6 +246,24 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/bbs/bbs",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/test-detail/test-detail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "开始考试",
                 "enablePullDownRefresh": false
             }
             

@@ -50,6 +50,7 @@
 			}
 		},
 		onLoad() {
+
 			//调用首页收据
 			this.getIndexList()
 			//调用优惠卷数据
@@ -88,6 +89,7 @@
 					const response = await IndexApi.getdiscount()
 					// console.log(response, '优惠券');
 					this.discountsList = response.data.data
+				
 				} catch (e) {
 					console.log(e);
 					//TODO handle the exception
@@ -96,7 +98,9 @@
 			//获取拼团数据
 			async getgroupList() {
 				try {
-					const response = await IndexApi.getgroup({usable: 1})
+					const response = await IndexApi.getgroup({
+						usable: 1
+					})
 					// console.log(response, '拼团');
 					this.groupList = response.data.data.rows
 				} catch (e) {

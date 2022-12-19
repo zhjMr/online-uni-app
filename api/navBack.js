@@ -23,8 +23,17 @@ const getbooke = (data) => {
 		data
 	})
 }
+//获取考场列表数据
+const getroom = (data) => {
+	return request({
+		url: "/mobile/testpaper/list",
+		method: "GET",
+		data
+	})
+}
 export default {
 	getColum,
 	getliver,
-	getbooke
+	getbooke,
+	getroom
 }

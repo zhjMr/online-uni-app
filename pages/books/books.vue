@@ -90,6 +90,7 @@
 		}
 
 		.price {
+			
 			display: flex;
 			justify-content: space-between;
 			.money {
@@ -105,6 +106,7 @@
 			}
 
 			.rouses {
+				
 				display: flex;
 				justify-content: space-around;
 				width: 200rpx;

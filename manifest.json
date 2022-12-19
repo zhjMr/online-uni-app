@@ -53,7 +53,7 @@
 		"devServer": {
 			"proxy": {
 				"/api": {
-					"target": "http://demonuxtapi.dishait.cn",
+					"target": "http://eduapi.2yuecloud.com",
 					"changeOrigin": true,
 					"pathRewrite": {
 						"^/api": ""

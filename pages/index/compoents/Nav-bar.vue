@@ -48,6 +48,14 @@
 					this.navTo("/pages/test-list/test-list")
 					return
 				}
+				if (item.name == "活动") {
+					this.navTo(`/pages/webview/webview?url=http://www.dishaxy.com`)
+					return
+				}
+				if (item.name == "社区") {
+					this.navTo(`/pages/bbs/bbs`)
+					return
+				}
 			}
 		}
 	}
