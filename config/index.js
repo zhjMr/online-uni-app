@@ -1,7 +1,7 @@
 const config = {
 	// #ifndef H5 
 	// 请求公共接口地址
-	baseUrl: 'http://eduapi.2yuecloud.com'
+	baseUrl: 'http://demonuxtapi.dishait.cn'
 	// #endif
 
 	// #ifdef H5

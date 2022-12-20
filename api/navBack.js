@@ -31,9 +31,18 @@ const getroom = (data) => {
 		data
 	})
 }
+//获取帖子导航
+const getbbs = (data) => {
+	return request({
+		url: "mobile/bbs",
+		method: "GET",
+		data
+	})
+}
 export default {
 	getColum,
 	getliver,
 	getbooke,
-	getroom
+	getroom,
+	getbbs
 }

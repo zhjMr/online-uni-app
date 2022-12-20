@@ -3,6 +3,7 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": true,
 				"app-plus": {
 					"titleNView": {
 						"searchInput": {
@@ -231,44 +232,52 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "pages/test-list/test-list",
+			"style": {
+				"navigationBarTitleText": "考场列表",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "pages/webview/webview",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/bbs/bbs",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"float": "right",
+	                         "type": "share"
+						
+						}],
+						"searchInput": {
+							"align": "center",
+							"placeholder": "输入搜素帖子",
+							"backgroundColor": "#f5f5f1",
+							"placeholderColor": "#929292",
+							"disabled": false
+						}
+					}
+				}
+			}
+
+		}, {
+			"path": "pages/test-detail/test-detail",
+			"style": {
+				"navigationBarTitleText": "开始考试",
+				"enablePullDownRefresh": false
+			}
+
 		}
-	    ,{
-            "path" : "pages/test-list/test-list",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "考场列表",
-                "enablePullDownRefresh": true
-            }
-            
-        }
-        ,{
-            "path" : "pages/webview/webview",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/bbs/bbs",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/test-detail/test-detail",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "开始考试",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	],
 	"tabBar": {
 		"selectedColor": "#2c2c2c",
 		"list": [{

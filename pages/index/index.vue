@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<skeleton v-if="loadingStatus"></skeleton>
 		<!-- 轮播图 -->
 		<SweiperBanner :BannerList='BannerList'></SweiperBanner>
 		<!-- nav导航栏 -->
@@ -25,16 +26,20 @@
 	import groups from "@/pages/index/compoents/i-group.vue"
 	//引入最新列表组件
 	import NewOfList from "@/pages/index/compoents/i-newView.vue"
+	//引入骨架结构组件
+	import skeleton from "@/pages/index/compoents/skeleton.vue"
 	export default {
 		components: {
 			SweiperBanner,
 			NavBar,
 			discounts,
 			groups,
-			NewOfList
+			NewOfList,
+			skeleton
 		},
 		data() {
 			return {
+				loadingStatus: false,
 				//轮播图数据
 				BannerList: [],
 				// nav icons数据
@@ -49,14 +54,12 @@
 				imageList: ""
 			}
 		},
+		onPullDownRefresh() {
+			this.init()
+		},
 		onLoad() {
-
-			//调用首页收据
-			this.getIndexList()
-			//调用优惠卷数据
-			this.getdiscount()
-			//调用拼团列表数据
-			this.getgroupList()
+			this.loadingStatus = true
+			this.init()
 		},
 		//监听原生标题栏输入框点击事件
 		onNavigationBarSearchInputClicked() {
@@ -64,6 +67,11 @@
 			this.navTo("/pages/search/search")
 		},
 		methods: {
+			async init() {
+				await this.getIndexList()
+				await this.getdiscount()
+				await this.getgroupList()
+			},
 			//获取首页收据
 			async getIndexList() {
 				try {
@@ -81,6 +89,9 @@
 				} catch (e) {
 					console.log(e);
 					//TODO handle the exception
+				} finally {
+					uni.stopPullDownRefresh()
+					this.loadingStatus = false
 				}
 			},
 			//获取优惠券数据
@@ -89,10 +100,12 @@
 					const response = await IndexApi.getdiscount()
 					// console.log(response, '优惠券');
 					this.discountsList = response.data.data
-				
+
 				} catch (e) {
 					console.log(e);
 					//TODO handle the exception
+				} finally {
+					this.loadingStatus = false
 				}
 			},
 			//获取拼团数据
@@ -106,6 +119,8 @@
 				} catch (e) {
 					console.log(e);
 					//TODO handle the exception
+				} finally {
+					this.loadingStatus = false
 				}
 			}
 		}

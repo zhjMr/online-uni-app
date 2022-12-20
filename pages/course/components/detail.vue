@@ -1,14 +1,18 @@
 <template>
 	<view>
 		<view class="contents">
-			<view class="iamg">
-				<view class="autoView" v-if="courseList.type=='video'">视频</view>
-				<view class="autoView" v-if="courseList.type=='media'">图文</view>
-				<view class="autoView" v-if="courseList.type=='column'">专栏</view>
-				<view class="autoView" v-if="courseList.type=='audio'">音频</view>
-				<image :src="courseList.cover" mode=""></image>
+			<view class="iamg" v-if="!courseList.isbuy">
+				<view class="autoView">{{courseList.type |  formatType}}</view>
+				<image :src="courseList.cover ||  '' " mode=""></image>
 			</view>
-			<view class="group1" v-if="group_id">
+			<!-- 视频播放 -->
+			<video v-else-if="courseList.type === 'video'" :src="courseList.content" :poster="courseList.cover" controls
+				style="width: 100%; height:420rpx;"></video>
+
+			<!-- 音频播放器 -->
+			<i-audio v-else-if="courseList.type === 'audio'" :poster='courseList.cover'></i-audio>
+			
+			<view class="group1" v-if="group_id && !courseList.isbuy">
 				<view class="groupTimer1">
 					<view class="left1">
 						<view class="price1">
@@ -33,25 +37,24 @@
 					<view class="text">
 						{{courseList.sub_count}}人学过
 					</view>
-					<view class="price">
+					<view class="price" v-if="!courseList.isbuy">
 						<text class="boxRed">￥{{courseList.price}}</text>
 						<text class="Linhige">￥{{courseList.t_price}}</text>
 					</view>
 				</view>
 				<view class="store">
-					<uni-icons type="star" size="30" @click="handleCollect" >
+					<uni-icons type="star" size="30" @click="handleCollect">
 					</uni-icons>
 				</view>
 			</view>
 		</view>
 		<view class="special">
-			专栏简介
+			{{(courseList.isbuy && courseList.type === 'media') ? '课程内容' : '课程简介'}}
 		</view>
-		<view class="content" v-html="courseList.try">
+		<view class="content"
+			v-html="(courseList.isbuy && courseList.type === 'media') ? courseList.content : courseList.try">
 		</view>
-		<view class="bottom">
-		</view>
-		<view class="buttonBottom">
+		<view class="buttonBottom" v-if="!courseList.isbuy">
 			<button @click="handleClickPay">{{group_id ? `立即拼团￥8` :`立即订购${courseList.price}`}}</button>
 		</view>
 	</view>
@@ -81,6 +84,17 @@
 		},
 		onLoad() {
 
+		},
+		filters: {
+			formatType(value) {
+				const type = {
+					media: "图文",
+					audio: "音频",
+					video: "视频",
+					column: '图文'
+				}
+				return type[value]
+			}
 		},
 		methods: {
 			//点击收藏icons 触发的方法
@@ -199,12 +213,6 @@
 
 	}
 
-	.bottom {
-		width: 100%;
-		height: 200rpx;
-		padding: 0 30rpx;
-		border-top: 6rpx solid #666;
-	}
 
 	.buttonBottom {
 		position: fixed;
