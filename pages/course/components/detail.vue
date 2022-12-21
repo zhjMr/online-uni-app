@@ -10,8 +10,10 @@
 				style="width: 100%; height:420rpx;"></video>
 
 			<!-- 音频播放器 -->
-			<i-audio v-else-if="courseList.type === 'audio'" :poster='courseList.cover'></i-audio>
-			
+			<i-audio v-else-if="courseList.type === 'audio'" :poster='courseList.cover' :src="courseList.content">
+			</i-audio>
+
+			<!-- http://music.163.com/song/media/outer/url?id=31877549.mp3 -->
 			<view class="group1" v-if="group_id && !courseList.isbuy">
 				<view class="groupTimer1">
 					<view class="left1">
@@ -42,8 +44,8 @@
 						<text class="Linhige">￥{{courseList.t_price}}</text>
 					</view>
 				</view>
-				<view class="store">
-					<uni-icons type="star" size="30" @click="handleCollect">
+				<view class="store" :class="[ courseList.isfava ? 'activeClass' : '' ]">
+					<uni-icons type="star" size="30" @click="handleCollect" :color='`${courseList.isfava}` '>
 					</uni-icons>
 				</view>
 			</view>
@@ -63,6 +65,9 @@
 <script>
 	//引入api
 	import collectApi from "@/api/group.js"
+	import {
+		mapGetters
+	} from "vuex"
 	export default {
 		props: {
 			courseList: {
@@ -82,8 +87,8 @@
 				}
 			}
 		},
-		onLoad() {
-
+		computed: {
+			...mapGetters(['hasLogin'])
 		},
 		filters: {
 			formatType(value) {
@@ -109,6 +114,7 @@
 					if (response.data.msg == "ok") {
 						uni.hideLoading()
 						this.$util.msg("收藏成功")
+						this.courseList.isfava = true
 					} else {
 						this.$util.msg(response.data.data)
 					}
@@ -128,7 +134,9 @@
 					courseList
 				} = this
 				// console.log('订购');
-				this.navTo(`/pages/create-order/create-order?id=${courseList.id}&type=course`)
+				this.navTo(`/pages/create-order/create-order?id=${courseList.id}&type=course`, {
+					login: !this.hasLogin
+				})
 			},
 			//拼团订购触发的事件
 			handleClickPay() {
@@ -162,6 +170,10 @@
 			width: 100%;
 			height: 100%;
 		}
+	}
+
+	.activeClass {
+		color: greenyellow;
 	}
 
 	.right {

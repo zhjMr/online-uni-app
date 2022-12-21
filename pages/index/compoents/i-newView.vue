@@ -4,14 +4,10 @@
 			<text>最新列表</text>
 			<text>查看更多</text>
 		</view>
-
 		<view class="group">
 			<view class="grouplist" v-for="(item,index) in NewList" :key="index" @click="handleChangeNew(item)">
 				<view class="images">
-					<view class="autoView" v-if="item.type=='video'">视频</view>
-					<view class="autoView" v-if="item.type=='media'">图文</view>
-					<view class="autoView" v-if="item.type=='column'">专栏</view>
-					<view class="autoView" v-if="item.type=='audio'">音频</view>
+					<view class="autoView">{{item.type|formatType}}</view>
 					<image :src="item.cover" mode=""></image>
 				</view>
 				<view class="right-title">
@@ -19,8 +15,9 @@
 						{{item.title}}
 					</view>
 					<view class="price">
-						<text>￥{{item.price}}</text>
-						<text>￥{{item.t_price}}</text>
+						<text v-if="item.price === 0">免费</text>
+						<text v-else-if="item.price > 0">￥{{item.price}}</text>
+						<text v-if="item.t_price">￥{{item.t_price}}</text>
 					</view>
 				</view>
 
@@ -45,6 +42,18 @@
 		data() {
 			return {
 
+			}
+		},
+		filters: {
+			formatType(value) {
+				let type = {
+					media: '图文',
+					audio: '音频',
+					video: '视频',
+					column: '专栏'
+				}
+
+				return type[value]
 			}
 		},
 		methods: {
