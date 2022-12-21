@@ -2,58 +2,70 @@
 	<view>
 		<view class="contents">
 			<view class="iamg">
-				<view class="autoView" v-if="courseList.type=='video'">视频</view>
-				<view class="autoView" v-if="courseList.type=='media'">图文</view>
-				<view class="autoView" v-if="courseList.type=='column'">专栏</view>
-				<view class="autoView" v-if="courseList.type=='audio'">音频</view>
+				<view class="autoView">{{courseList.type | formatType }}专栏</view>
 				<image :src="courseList.cover" mode=""></image>
 			</view>
-			<view class="group1" v-if="group_id">
-				<view class="groupTimer1">
-					<view class="left1">
-						<view class="price1">
-							<text>￥8.00</text>
-							<text>￥90.00</text>
+			<!-- tabbar组件 -->
+			<tabBar :tabBarList="tabBarList" @change="handelActive"></tabBar>
+
+			<!-- 简介 -->
+			<view v-if="current === 0">
+				<view class="right">
+					<view class="box">
+						<view class="title">
+							{{courseList.title}}
 						</view>
-						<view class="ren1">
-							2人拼团
+						<view class="text">
+							{{courseList.sub_count}}人学过
 						</view>
+						<view class="price" v-if="!courseList.isbuy">
+							<text class="boxRed">￥{{courseList.price}}</text>
+							<text class="Linhige">￥{{courseList.t_price}}</text>
+						</view>
+					</view>
+					<view class="store" :class="[ courseList.isfava ? 'activeClass' : '' ]">
+						<uni-icons type="star" size="30" @click="handleCollect" :color='`${courseList.isfava}` '>
+						</uni-icons>
+					</view>
+				</view>
+
+				<view class="special">
+					专栏简介
+				</view>
+				<view class="content" v-html="courseList.content">
+				</view>
+			</view>
+
+			<!-- 目录 -->
+			<view v-if="current === 1">
+				<!-- 共多少节 -->
+				<view class="p-3">
+					<view class="bg-light border p-2 text-muted rounded">
+						共 {{columnList.length}} 节
+					</view>
+				</view>
+
+				<!-- 专栏列表 -->
+				<i-menu-item @click="handleOpenDetail(item)" v-for="(item,index) in columnList" :key="index"
+					:index="index" :title="item.title">
+					<view class='flex'>
+						<text class="border border-danger text-danger rounded font-sm px-1 mt-1 mr-2">
+							{{item.type | formatType}}
+						</text>
+						<text v-if="item.price == 0" class="border border-danger text-danger rounded font-sm px-1 mt-1">
+							免费试看
+						</text>
 					</view>
 
-					<view class="right1">
-						距结束567天14:49:20
-					</view>
-				</view>
+				</i-menu-item>
 			</view>
-			<view class="right">
-				<view class="box">
-					<view class="title">
-						{{courseList.title}}
-					</view>
-					<view class="text">
-						{{courseList.sub_count}}人学过
-					</view>
-					<view class="price">
-						<text class="boxRed">￥{{courseList.price}}</text>
-						<text class="Linhige">￥{{courseList.t_price}}</text>
-					</view>
-				</view>
-				<view class="store">
-					<uni-icons type="star" size="30" @click="handleCollect">
-					</uni-icons>
-				</view>
+
+
+			<view class="buttonBottom" v-if="!courseList.isbuy">
+				<button @click="handleClickPay">{{group_id ? `立即拼团￥8` :`立即订购${courseList.price}`}}</button>
 			</view>
 		</view>
-		<view class="special">
-			专栏简介
-		</view>
-		<view class="content" v-html="courseList.content">
-		</view>
-		<view class="bottom">
-		</view>
-		<view class="buttonBottom">
-			<button @click="handleClickPay">{{group_id ? `立即拼团￥8` :`立即订购${courseList.price}`}}</button>
-		</view>
+
 	</view>
 </template>
 
@@ -63,6 +75,9 @@
 	export default {
 		data() {
 			return {
+				current: 0,
+				tabBarList: ['简介', '目录'],
+				columnList: [], //目录列表
 				datai: {
 					id: 0,
 					column_id: 0,
@@ -78,6 +93,17 @@
 				}
 			}
 		},
+		filters: {
+			formatType(value) {
+				const type = {
+					media: "图文",
+					audio: "音频",
+					video: "视频",
+					column: '图文'
+				}
+				return type[value]
+			}
+		},
 		onLoad(options) {
 			this.group_id = options.group_id
 			this.datai.id = options.id
@@ -85,12 +111,28 @@
 			this.getcolumn()
 		},
 		methods: {
+			handleOpenDetail(item) {
+				if (item.price != 0 && !this.courseList.isbuy) {
+					this.$util.msg("请先购买该专栏")
+					return
+				}
+				this.navTo("/pages/course/course?id=" + item.id + "&column_id=" + this.courseList.id, {
+					login: true
+				})
+			},
+			//获取tbbar点击切换事件
+			handelActive(e) {
+				// console.log(e);
+				// 获取点击的下标
+				this.current = e
+			},
 			//获取专栏列表数据
 			async getcolumn() {
 				try {
 					const response = await collectApi.getcolumn(this.datai)
 					console.log(response, '专栏数据');
 					this.courseList = response.data.data
+					this.columnList = response.data.data.column_courses
 					uni.setNavigationBarTitle({
 						title: response.data.data.title
 					})
@@ -111,6 +153,7 @@
 					if (response.data.msg == "ok") {
 						uni.hideLoading()
 						this.$util.msg("收藏成功")
+						this.courseList.isfava = true
 					} else {
 						this.$util.msg(response.data.data)
 					}
@@ -130,7 +173,9 @@
 					courseList
 				} = this
 				// console.log('订购');
-				this.navTo(`/pages/create-order/create-order?id=${courseList.id}&type=column`)
+				this.navTo(`/pages/create-order/create-order?id=${courseList.id}&type=column`, {
+					login: true
+				})
 			},
 			//拼团订购触发的事件
 			handleClickPay() {
@@ -164,6 +209,10 @@
 			width: 100%;
 			height: 100%;
 		}
+	}
+
+	.activeClass {
+		color: greenyellow;
 	}
 
 	.right {
@@ -215,12 +264,6 @@
 
 	}
 
-	.bottom {
-		width: 100%;
-		height: 200rpx;
-		padding: 0 30rpx;
-		border-top: 6rpx solid #666;
-	}
 
 	.buttonBottom {
 		position: fixed;
@@ -238,59 +281,6 @@
 
 	}
 
-	.group1 {
-		.imag1 {
-			width: 100%;
-			height: 422rpx;
-
-			image {
-				width: 100%;
-				height: 100%;
-			}
-		}
-
-		.groupTimer1 {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			width: 100%;
-			height: 170rpx;
-			padding: 0 30rpx;
-			background-color: #dc3545;
-			margin-top: 10rpx;
-
-			.left1 {
-				.price1 {
-					color: #fff;
-
-					text:nth-child(1) {
-						font-size: 40rpx;
-					}
-
-					text:nth-child(2) {
-						text-decoration: line-through;
-					}
-				}
-
-				.ren1 {
-					width: 140rpx;
-					height: 60rpx;
-					color: #dc3545;
-					border-radius: 4rpx;
-					font-size: 30rpx;
-					background-color: #fff;
-					line-height: 60rpx;
-					text-align: center;
-					margin: 10rpx 0;
-				}
-			}
-
-			.right1 {
-				margin-right: 70rpx;
-				color: #fff;
-			}
-		}
-	}
 
 	.autoView {
 		font-size: 16rpx;

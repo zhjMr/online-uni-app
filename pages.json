@@ -19,7 +19,7 @@
 		}, {
 			"path": "pages/study/study",
 			"style": {
-				"navigationBarTitleText": "学习",
+				"navigationBarTitleText": "学习进度",
 				"enablePullDownRefresh": false
 			}
 

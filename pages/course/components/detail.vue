@@ -65,9 +65,6 @@
 <script>
 	//引入api
 	import collectApi from "@/api/group.js"
-	import {
-		mapGetters
-	} from "vuex"
 	export default {
 		props: {
 			courseList: {
@@ -86,9 +83,6 @@
 					type: "course",
 				}
 			}
-		},
-		computed: {
-			...mapGetters(['hasLogin'])
 		},
 		filters: {
 			formatType(value) {
@@ -135,7 +129,7 @@
 				} = this
 				// console.log('订购');
 				this.navTo(`/pages/create-order/create-order?id=${courseList.id}&type=course`, {
-					login: !this.hasLogin
+					login: true
 				})
 			},
 			//拼团订购触发的事件
