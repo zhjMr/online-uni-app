@@ -11,7 +11,8 @@
 				<text>及格分: {{item.pass_score}}</text>
 			</view>
 			<view class="study-sum-box">
-				<button type="default" class="btn" @click="handleChangeRoom(item)">参加考试</button>
+				<button type="default" :class=" item.is_test ? 'eee' : 'btn'"
+					@click="handleChangeRoom(item)">{{item.is_test?'你考过了':'参加考试'}}</button>
 			</view>
 		</view>
 		<uni-load-more :status="moreStatus"></uni-load-more>
@@ -30,7 +31,7 @@
 				moreStatus: "loading"
 			}
 		},
-		onLoad() {
+		onShow() {
 			//调用考试列表数据	
 			this.getRoomList()
 		},
@@ -74,6 +75,7 @@
 						page,
 						limit
 					})
+					
 					// console.log(response, '考试列表数据');
 					this.roomList = this.page == 1 ? response.data.data.rows : this.roomList.concat(response.data.data
 						.rows)
@@ -92,6 +94,17 @@
 	.hight-box {
 		padding: 0 30rpx;
 		border-bottom: 14rpx solid #eee;
+
+		.eee {
+			background-color: #7be09f;
+			float: right;
+			margin-top: 10rpx;
+			width: 200rpx;
+			height: 86rpx;
+			line-height: 86rpx;
+			text-align: center;
+			color: #fff;
+		}
 
 		.study {
 			display: flex;

@@ -13,13 +13,7 @@
 						class="scroll-view-height list-content">
 						<view>
 							<!-- 课程列表 -->
-							<courseTo :courseList="courseList">
-								<view slot="desc" class="font-sm text-muted my-1">学习进度</view>
-								<view class="font-sm" slot="desc">
-									<text class="text-danger mr-1">最近学习</text>
-									<text class="text-muted">已学习 10%</text>
-								</view>
-							</courseTo>
+							<courseTo :courseList="courseList"></courseTo>
 							<uni-load-more :status="loadMore"></uni-load-more>
 						</view>
 					</scroll-view>
@@ -29,13 +23,7 @@
 						class="scroll-view-height list-content">
 						<view>
 							<!-- 专栏列表 -->
-							<special :columnList="columnList">
-								<view slot="desc" class="font-sm text-muted my-1">学习进度</view>
-								<view class="font-sm" slot="desc">
-									<text class="text-danger mr-1">最近学习</text>
-									<text class="text-muted">已学习 10%</text>
-								</view>
-							</special>
+							<special :columnList="columnList"></special>
 							<uni-load-more :status="loadMore"></uni-load-more>
 						</view>
 					</scroll-view>
@@ -93,7 +81,7 @@
 				loadMore: "more",
 				courseList: [], //课程列表数据
 				columnList: [], //专栏列表数据
-
+				
 			}
 		},
 		computed: {
@@ -108,6 +96,10 @@
 			this.getcolumnList()
 		},
 		methods: {
+			gitMetnoth(data) {
+				
+
+			},
 			//下拉到底部触发的事件
 			hendleChangeBottom() {
 				if (this.type == "course") {
@@ -129,6 +121,7 @@
 						type: 'course'
 					})
 					console.log(response, '课程列表');
+					this.gitMetnoth(response.data.data.rows)
 					this.courseList = this.page === 1 ? response.data.data.rows : [...this.courseList, ...response.data
 						.data.rows
 					]

@@ -9,7 +9,15 @@
 				<view class="title">
 					{{item.title}}
 				</view>
-				<slot name="desc"></slot>
+
+				<view v-if="item.progress>=0">
+					<view class="font-sm text-muted my-3">学习进度</view>
+					<view class="font-sm">
+						<text class="text-danger mr-1">最近学习</text>
+						<text class="text-muted">已学习 {{item.progress}}%</text>
+					</view>
+				</view>
+
 				<view class="sprice">
 					<text v-if="item.price==0">免费</text>
 					<text v-if="item.price>0">￥{{item.price}}</text>
@@ -56,6 +64,9 @@
 </script>
 
 <style lang="scss">
+	.text-danger{
+		font-size: 16rpx !important;
+	}
 	.autoView {
 		font-size: 16rpx;
 		padding: 5rpx;
