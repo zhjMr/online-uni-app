@@ -103,6 +103,11 @@
 					// 获取当前正在播放的进度时间
 					this.currentTime = this._audioContext.currentTime
 
+					if (this.duration > 0) {
+						let progress = ((this.currentTime / this.duration) * 100).toFixed(2)
+						this.$emit("onProgress", progress)
+					}
+
 				})
 				// 使用事件监听音频是否播放结束
 				this._audioContext.onEnded(() => {
@@ -154,7 +159,7 @@
 				this.loopStatus = !this.loopStatus
 				this._audioContext.loop = this.loopStatus
 				this.$util.msg(this.loopStatus ? '开启循环' : '关闭循环')
-				
+
 			}
 		}
 	}

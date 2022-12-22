@@ -8,7 +8,15 @@ const getStatus = (data) => {
 		data
 	})
 }
-
+// 设置学习进度
+const setStudyUserHistory = (data) => {
+	return request({
+		url: '/mobile/user_history/update',
+		method: 'POST',
+		data
+	})
+}
 export default {
 	getStatus,
+	setStudyUserHistory
 }

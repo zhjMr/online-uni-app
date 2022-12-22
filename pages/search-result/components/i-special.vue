@@ -11,9 +11,9 @@
 				</view>
 
 				<view v-if="item.progress>=0">
-					<view class="font-sm text-muted my-3">学习进度</view>
+					<view class="font-sm text-muted my-3" >学习进度</view>
 					<view class="font-sm">
-						<text class="text-danger mr-1">最近学习</text>
+						<text class="text-danger mr-1" v-if="index==0">最近学习</text>
 						<text class="text-muted">已学习 {{item.progress}}%</text>
 					</view>
 				</view>
@@ -87,7 +87,10 @@
 
 
 	}
-
+ .text-muted{
+	 font-size: 16rpx !important;
+	 color: #666 !important;
+ }
 	.i-clurse {
 		.courseList {
 			margin-top: 40rpx;
@@ -120,7 +123,6 @@
 					text-overflow: ellipsis; //溢出显示省略号
 
 				}
-
 				text:nth-child(2) {
 					font-size: 20rpx;
 					color: #666;

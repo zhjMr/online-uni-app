@@ -11,9 +11,9 @@
 				</view>
 
 				<view v-if="item.progress>=0">
-					<view class="font-sm text-muted my-3">学习进度</view>
+					<view class="font-sm text-muted my-3" >学习进度</view>
 					<view class="font-sm">
-						<text class="text-danger mr-1">最近学习</text>
+						<text class="text-danger mr-1" v-if="index==0">最近学习</text>
 						<text class="text-muted">已学习 {{item.progress}}%</text>
 					</view>
 				</view>
@@ -66,6 +66,10 @@
 <style lang="scss">
 	.text-danger{
 		font-size: 16rpx !important;
+	}
+	.text-muted{
+		 font-size: 16rpx !important;
+		 color: #666 !important;
 	}
 	.autoView {
 		font-size: 16rpx;

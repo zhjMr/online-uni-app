@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view>
-			<datailfor :courseList="courseList" :group_id="group_id"></datailfor>
+			<datailfor @handleclickOk='handleclickOk' :courseList="courseList" :group_id="group_id"></datailfor>
 		</view>
 	</view>
 </template>
@@ -11,6 +11,8 @@
 	import datailfor from "@/pages/course/components/detail.vue"
 	//引入api
 	import courseApi from "@/api/search.js"
+	import studyApi from "@/api/study.js"
+	let windowHeight = uni.getSystemInfoSync().windowHeight
 	export default {
 		components: {
 			datailfor,
@@ -24,7 +26,11 @@
 					flashsale_id: 0,
 				},
 				courseList: {}, //详情列表数据
-				group_id: 0
+				group_id: 0,
+				column_id: 0,
+				scrollTop: 0,
+				mediaHeight: 0,
+				progress: 0
 			}
 		},
 		onLoad(options) {
@@ -33,7 +39,54 @@
 			//调用课程详情列表数据
 			this.getCourseList()
 		},
+		onPageScroll(e) {
+			if (this.courseList.isbuy && this.courseList.type === "media" && e.scrollTop > this.scrollTop) {
+				this.scrollTop = e.scrollTop
+			}
+			this.handleMediaProgress()
+			// console.log("scrollTop=>", this.scrollTop)
+		},
+		beforeDestroy() {
+			this.handleUpdateStudyProgress()
+		},
 		methods: {
+			handleclickOk(e) {
+				this.progress = e
+			},
+			// 将学习进度提交到后台
+			async handleUpdateStudyProgress() {
+				try {
+					let data
+					if (this.column_id === 0) {
+						data = {
+							id: this.courseList.id,
+							type: "course",
+							progress: this.progress
+						}
+					} else {
+						data = {
+							detail_id: this.courseList.id,
+							id: this.column_id,
+							type: 'column'
+						}
+					}
+
+					const response = await studyApi.setStudyUserHistory(data)
+
+					uni.$emit("progress")
+				} catch (e) {
+					//TODO handle the exception
+					console.log("error=>", e)
+				}
+			},
+			// 计算学习的进度
+			handleMediaProgress() {
+
+				// this.progress = (((this.scrollTop + windowHeight)/this.mediaHeight)*100).toFixed(2)
+				this.progress = ((this.scrollTop + windowHeight) / 34.50).toFixed(2)
+				console.log(this.progress);
+
+			},
 			//获取课程详情列表数据
 			async getCourseList() {
 				try {

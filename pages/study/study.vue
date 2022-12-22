@@ -81,7 +81,7 @@
 				loadMore: "more",
 				courseList: [], //课程列表数据
 				columnList: [], //专栏列表数据
-				
+
 			}
 		},
 		computed: {
@@ -94,12 +94,12 @@
 			this.getStudyList()
 			//调用专栏
 			this.getcolumnList()
+			uni.$on("progress", () => {
+				this.getStudyList()
+				this.getcolumnList()
+			})
 		},
 		methods: {
-			gitMetnoth(data) {
-				
-
-			},
 			//下拉到底部触发的事件
 			hendleChangeBottom() {
 				if (this.type == "course") {
@@ -120,8 +120,7 @@
 						page,
 						type: 'course'
 					})
-					console.log(response, '课程列表');
-					this.gitMetnoth(response.data.data.rows)
+					// console.log(response, '课程列表');
 					this.courseList = this.page === 1 ? response.data.data.rows : [...this.courseList, ...response.data
 						.data.rows
 					]
@@ -145,7 +144,7 @@
 						page,
 						type: 'column'
 					})
-					console.log(response, '专栏列表');
+					// console.log(response, '专栏列表');
 					this.columnList = this.page === 1 ? response.data.data.rows : [...this.columnList, ...response.data
 						.data.rows
 					]

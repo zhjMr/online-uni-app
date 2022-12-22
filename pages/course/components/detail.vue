@@ -6,11 +6,12 @@
 				<image :src="courseList.cover ||  '' " mode=""></image>
 			</view>
 			<!-- 视频播放 -->
-			<video v-else-if="courseList.type === 'video'" :src="courseList.content" :poster="courseList.cover" controls
-				style="width: 100%; height:420rpx;"></video>
+			<video @timeupdate="handleVideoProgress" v-else-if="courseList.type === 'video'" :src="courseList.content"
+				:poster="courseList.cover" controls style="width: 100%; height:420rpx;"></video>
 
 			<!-- 音频播放器 -->
-			<i-audio v-else-if="courseList.type === 'audio'" :poster='courseList.cover' :src="courseList.content">
+			<i-audio @onProgress="handleAudioProgress" v-else-if="courseList.type === 'audio'"
+				:poster='courseList.cover' :src="courseList.content">
 			</i-audio>
 
 			<!-- http://music.163.com/song/media/outer/url?id=31877549.mp3 -->
@@ -81,7 +82,11 @@
 				collectFrom: {
 					goods_id: "",
 					type: "course",
-				}
+				},
+				column_id: 0,
+				scrollTop: 0,
+				mediaHeight: 0,
+				progress: 0
 			}
 		},
 		filters: {
@@ -96,6 +101,25 @@
 			}
 		},
 		methods: {
+			// 音频的学习进度
+			handleAudioProgress(e) {
+				// console.log("e=>", e)
+				this.progress = e
+				this.$emit('handleclickOk', this.progress)
+			},
+			// 视频的学习进度
+			handleVideoProgress(event) {
+				console.log("event=>", event)
+				const {
+					currentTime,
+					duration
+				} = event.detail
+
+				if (duration > 0) {
+					this.progress = ((currentTime / duration) * 100).toFixed(2)
+				}
+				this.$emit('handleclickOk', this.progress)
+			},
 			//点击收藏icons 触发的方法
 			async handleCollect() {
 				try {
