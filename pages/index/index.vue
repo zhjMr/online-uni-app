@@ -61,6 +61,9 @@
 			this.loadingStatus = true
 			this.init()
 		},
+		onShow() {
+			this.getdiscount()
+		},
 		//监听原生标题栏输入框点击事件
 		onNavigationBarSearchInputClicked() {
 			// console.log(111, '搜索框');

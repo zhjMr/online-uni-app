@@ -79,10 +79,10 @@
 			//下拉到底部触发的事件
 			hendleChangeBottom() {
 				if (this.type == "course") {
-					this.page++
+					this.page += 1
 					this.getSearchList()
 				} else {
-					this.page++
+					this.page += 1
 					this.getSearchcolumn()
 				}
 			},
@@ -118,6 +118,10 @@
 					]
 					this.loadMore = response.data.data.rows.length < 10 ? 'noMore' : 'more'
 				} catch (e) {
+					this.loadMore = 'more'
+					if (this.page > 1) {
+						this.page = this.page - 1
+					}
 					console.log(e);
 					//TODO handle the exception
 				}
@@ -140,6 +144,10 @@
 					]
 					this.loadMore = response.data.data.rows.length < 10 ? 'noMore' : 'more'
 				} catch (e) {
+					this.loadMore = 'more'
+					if (this.page > 1) {
+						this.page = this.page - 1
+					}
 					console.log(e);
 					//TODO handle the exception
 				}
