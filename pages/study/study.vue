@@ -13,7 +13,13 @@
 						class="scroll-view-height list-content">
 						<view>
 							<!-- 课程列表 -->
-							<courseTo :courseList="courseList"></courseTo>
+							<courseTo :courseList="courseList">
+								<view slot="desc" class="font-sm text-muted my-1">学习进度</view>
+								<view class="font-sm" slot="desc">
+									<text class="text-danger mr-1">最近学习</text>
+									<text class="text-muted">已学习 10%</text>
+								</view>
+							</courseTo>
 							<uni-load-more :status="loadMore"></uni-load-more>
 						</view>
 					</scroll-view>
@@ -23,7 +29,13 @@
 						class="scroll-view-height list-content">
 						<view>
 							<!-- 专栏列表 -->
-							<special :columnList="columnList"></special>
+							<special :columnList="columnList">
+								<view slot="desc" class="font-sm text-muted my-1">学习进度</view>
+								<view class="font-sm" slot="desc">
+									<text class="text-danger mr-1">最近学习</text>
+									<text class="text-muted">已学习 10%</text>
+								</view>
+							</special>
 							<uni-load-more :status="loadMore"></uni-load-more>
 						</view>
 					</scroll-view>
@@ -124,7 +136,7 @@
 				} catch (e) {
 					this.loadMore = 'more'
 					if (this.page > 1) {
-						this.page =this.page - 1
+						this.page = this.page - 1
 					}
 					console.log(e);
 					//TODO handle the exception
@@ -148,7 +160,7 @@
 				} catch (e) {
 					this.loadMore = 'more'
 					if (this.page > 1) {
-						this.page =this.page - 1
+						this.page = this.page - 1
 					}
 					console.log(e);
 					//TODO handle the exception

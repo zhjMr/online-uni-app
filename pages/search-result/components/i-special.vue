@@ -9,6 +9,7 @@
 				<view class="title">
 					{{item.title}}
 				</view>
+				<slot name="desc"></slot>
 				<view class="sprice">
 					<text v-if="item.price==0">免费</text>
 					<text v-if="item.price>0">￥{{item.price}}</text>
