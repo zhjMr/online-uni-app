@@ -253,18 +253,20 @@
 				"enablePullDownRefresh": false,
 				"app-plus": {
 					"titleNView": {
+						"searchInput": {
+							"height": "200rpx",
+							"align": "center",
+							"placeholder": "搜索搜索帖子",
+							"placeholderColor": "#928e8a",
+							"backgroundColor": "#f5f5f1",
+							"borderRadius": "10rpx"
+						},
 						"buttons": [{
 							"float": "right",
-	                         "type": "share"
-						
-						}],
-						"searchInput": {
-							"align": "center",
-							"placeholder": "输入搜素帖子",
-							"backgroundColor": "#f5f5f1",
-							"placeholderColor": "#929292",
-							"disabled": false
-						}
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue682",
+							"fontSize": "20"
+						}]
 					}
 				}
 			}

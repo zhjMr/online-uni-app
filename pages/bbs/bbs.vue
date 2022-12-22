@@ -1,38 +1,107 @@
 <template>
 	<view>
-		<view class="over">
-			<scroll-view scroll-x="true" @scrolltolower="scorllClick">
-				<view class="bbslist">
-					<view v-for="(item,index) in barList" :key="index">
-						<text class="text">{{item.title}}</text>
-					</view>
-				</view>
-			</scroll-view>
+		<scroll-view scroll-x="true" class="px-1 pt-2 scroll-row" @scrolltolower="handleBbsLoadMore">
+			<view v-for="(item,index) in barList" :key="index" @click="changeCurrent(item.id)"
+				:class="{active:data.bbs_id==item.id}" class="scroll-row-item border px-3 py-1 rounded mx-1 mb-2">
+				{{ item.title }}
+			</view>
+		</scroll-view>
+
+
+		<view class="divider"></view>
+
+		<view class="flex py-2">
+			<view class="flex-1 flex align-center justify-center text-muted font-md">
+				<text class="font-weight-bold mr-2">总帖子</text>{{postCount}}
+			</view>
+			<view class="flex-1 flex align-center justify-center text-muted font-md">
+				<text class="font-weight-bold mr-2">总用户</text>{{userCount}}
+			</view>
 		</view>
+		<view class="divider"></view>
+
+		<bbsItem v-for="(item,index) in list" :key="index" :item="item"></bbsItem>
+
 	</view>
 </template>
 
 <script>
 	import bbsFromList from "@/api/navBack.js"
+	import bbsAPi from "@/api/bbs.js"
+	import bbsItem from "@/pages/bbs/components/bbs-item.vue"
 	export default {
+		components: {
+			bbsItem
+		},
 		data() {
 			return {
-				page: '1',
-				barList: []
+				data: {
+					page: 1, //当前页
+					keyword: '', //搜索内容
+					bbs_id: 0, //当前id
+				},
+				list: [],
+				barList: [],
+				postCount: 266, //总帖子
+				userCount: 2349, //总用户
 			}
 		},
 		onLoad() {
 			this.getBbsList()
 		},
+		onShow() {
+			this.getList()
+		},
+		onReachBottom() {
+			this.data.page += 1
+			this.getList()
+		},
 		methods: {
-			scorllClick() {
-				console.log(111);
+			//向右滑动触发的方法
+			handleBbsLoadMore() {
+				this.data.page += 1
+				this.getBbsList()
+			},
+			// 切换当前选中
+			changeCurrent(id) {
+				this.data.bbs_id = id
+				this.getList()
+			},
+			async getList() {
+				try {
+					let response = await bbsAPi.getPostList(this.data)
+					console.log(response, '111');
+					this.list = this.data.page === 1 ? response.data.data.rows : this.list.concat(response
+						.data
+						.data.rows)
+
+				} catch (e) {
+					console.log("error=>", e)
+				}
 			},
 			async getBbsList() {
 				try {
-					const response = await bbsFromList.getbbs(this.page)
+
+					const response = await bbsFromList.getbbs(this.data)
 					console.log(response);
-					this.barList = response.data.data.rows
+
+					if (response.data.code == 20000) {
+						this.postCount = response.data.data.postCount
+						this.userCount = response.data.data.userCount
+
+						if (this.data.page == 1) {
+							this.barList = response.data.data.rows
+							this.barList.unshift({
+								id: 0,
+								title: "全部"
+							})
+							return
+						}
+						this.barList = this.data.page === 1 ? response.data.data.rows : this.barList.concat(response
+							.data
+							.data.rows)
+					}
+
 				} catch (e) {
 					console.log(e);
 					//TODO handle the exception
@@ -43,11 +112,14 @@
 </script>
 
 <style lang="scss">
+	.active {
+		background-color: #5ccc84;
+		color: #fff;
+	}
+
 	.over {
-		width: 100%;
 		height: 120rpx;
 		display: flex;
-		overflow-y: hidden;
 		border-bottom: 16rpx solid #eee;
 
 		.bbslist {
