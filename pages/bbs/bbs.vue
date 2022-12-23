@@ -67,21 +67,26 @@
 				this.data.bbs_id = id
 				this.getList()
 			},
+			//获取帖子列表数据
 			async getList() {
 				try {
+					uni.showLoading({
+						mask: true
+					})
 					let response = await bbsAPi.getPostList(this.data)
 					console.log(response, '111');
 					this.list = this.data.page === 1 ? response.data.data.rows : this.list.concat(response
 						.data
 						.data.rows)
+					uni.hideLoading()
 
 				} catch (e) {
 					console.log("error=>", e)
+					uni.hideLoading()
 				}
 			},
 			async getBbsList() {
 				try {
-
 					const response = await bbsFromList.getbbs(this.data)
 					console.log(response);
 

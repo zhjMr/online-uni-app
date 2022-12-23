@@ -98,10 +98,65 @@
 
 			}
 		},
-
-
 		methods: {
+			detailList() {
+				uni.showLoading({
+					mask: true
+				})
+				uni.showModal({
 
+					content: '是否要删除该帖子？',
+					success: async (res) => {
+						if (res.confirm) {
+							console.log('用户点击确定');
+							let res = await bbsApi.deleteList({
+								id: this.item.id
+							})
+							console.log(res)
+							if (res.data.code == 20000) {
+								this.$emit("gitList")
+								uni.hideLoading()
+								this.$util.msg('删除成功')
+							} else {
+								uni.hideLoading()
+								this.$util.msg('删除失败')
+							}
+						} else if (res.cancel) {
+							uni.hideLoading()
+							console.log('用户点击取消');
+						}
+					}
+				})
+			},
+			// 点赞 取消点赞 
+			async handelSupport() {
+
+				let res
+				if (!this.item.issupport) {
+					res = await bbsApi.support({
+						post_id: this.item.id
+					})
+					if (res.data.code == 20000) {
+						this.item.support_count += 1
+						this.item.issupport = true
+						this.$util.msg('点赞成功')
+					}
+				} else {
+					res = await bbsApi.unsupport({
+						post_id: this.item.id
+					})
+					if (res.data.code == 20000) {
+						this.item.support_count -= 1
+						this.item.issupport = false
+						this.$util.msg('取消点赞')
+					}
+				}
+			},
+			// 跳转详情 
+			toDetail() {
+				console.log(1234, this.item.id)
+				this.navTo(`/pages/post-detail/post-detail?id=${this.item.id}`)
+			}
 		}
 	}
 </script>
