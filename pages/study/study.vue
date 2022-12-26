@@ -73,7 +73,7 @@
 						id: "3",
 						icon: "iconfont icon-shoucang1",
 						text: "电书",
-						pages: "/pages/my-book/my-book"
+						page: "/pages/my-book/my-book"
 					},
 				],
 				page: 1,

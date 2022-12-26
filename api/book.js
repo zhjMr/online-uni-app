@@ -6,6 +6,15 @@ const bookDetail = (data) => {
 		data
 	})
 }
+//我的电子书
+const getbooks = (data) => {
+	return request({
+		url: "/mobile/mybook",
+		method: 'GET',
+		data
+	})
+}
 export default {
-	bookDetail
+	bookDetail,
+	getbooks
 }

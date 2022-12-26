@@ -3,19 +3,20 @@
 		<view class="p-2 " style="border-bottom: 1px solid #ccc;">
 			<view class="flex justify-between">
 				<text class="h4 font-weight-bold">{{item.testpaper.title}}</text>
-				<text class="font-sm text-success">考试成功</text>
+				<text class="font-sm text-success">考试完成</text>
 			</view>
 			<view class="flex my-3">
 				<text class="flex-1">题目总数: {{item.testpaper.question_count}}</text>
-				<text class="flex-1 text-danger">最终得分：正在阅卷</text>
+				<text class="flex-1 text-danger" v-if="item.read_status=='0' ">最终得分：正在阅卷</text>
+				<text class="flex-1 " v-else>最终得分：{{item.score}}</text>
 			</view>
 
 
 		</view>
 		<view class="p-3">
 			<view class="flex text-light-muted">
-			{{item.created_time}}
-		</view>
+				{{item.created_time}}
+			</view>
 		</view>
 		<view class="divider"></view>
 
