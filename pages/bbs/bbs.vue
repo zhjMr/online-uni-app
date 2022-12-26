@@ -46,6 +46,23 @@
 				userCount: 2349, //总用户
 			}
 		},
+		// 实时会获取搜索框你们的内容
+		onNavigationBarSearchInputChanged(e) {
+			console.log(e)
+			this.data.keyword = e.text
+			console.log(this.data.keyword)
+		},
+		// 回车 
+		onNavigationBarSearchInputConfirmed() {
+			console.log(this.data)
+			this.getList()
+		},
+		// 按钮 跳转新增帖子页面 
+		onNavigationBarButtonTap(e) {
+			if (e.index === 0) {
+				this.navTo('/pages/add-post/add-post')
+			}
+		},
 		onLoad() {
 			this.getBbsList()
 		},

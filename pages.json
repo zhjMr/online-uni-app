@@ -278,44 +278,51 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "pages/post-detail/post-detail",
+			"style": {
+				"navigationBarTitleText": "帖子详情",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/book-detail/book-detail",
+			"style": {
+				"navigationBarTitleText": "电子专栏",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/my-post/my-post",
+			"style": {
+				"navigationBarTitleText": "我的帖子",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/my-test/my-test",
+			"style": {
+				"navigationBarTitleText": "我的考试记录",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/add-post/add-post",
+			"style": {
+				"navigationBarTitleText": "新增帖子",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"text": "发布",
+							"fontSize": "28rpx"
+						}]
+					}
+				}
+			}
+
 		}
-	    ,{
-            "path" : "pages/post-detail/post-detail",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "帖子详情",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/book-detail/book-detail",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "电子专栏",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/my-post/my-post",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "我的帖子",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/my-test/my-test",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "我的考试记录",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	],
 	"tabBar": {
 		"selectedColor": "#2c2c2c",
 		"list": [{
