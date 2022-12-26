@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="books-box" v-for="(item,index) in booksList" :key="index">
+		<view class="books-box" v-for="(item,index) in booksList" :key="index" @click="handleClickPages(item)">
 			<view class="imag">
 				<image :src="item.cover" mode=""></image>
 			</view>
@@ -10,20 +10,20 @@
 				</view>
 				<view class="price">
 					<view class="money">
-						<text>￥{{item.price}}</text>
-						<text>￥{{item.t_price}}</text>
+						<text v-if="item.price==0">免费</text>
+						<text v-if="item.price>0">￥{{item.price}}</text>
+						<text v-if="item.t_price">￥{{item.t_price}}</text>
 					</view>
-					<view class="rouses">
-						<text>{{item.sub_count}}人订阅</text>
-						<text>
-							<uni-icons type="arrow-right" size="10"></uni-icons>
-						</text>
+
+					<view class="border flex align-center  rounded-circle px-2 py-1 ml-auto text-muted"
+						style="color: #6c757d;margin-right: 30rpx;">
+						{{item.sub_count}}人订阅
+						<text class="iconfont icon-xiayibu ml-1"></text>
 					</view>
 				</view>
 			</view>
-
-
 		</view>
+		<uni-load-more :status="moreStatus"></uni-load-more>
 	</view>
 </template>
 
@@ -37,23 +37,51 @@
 					page: 1,
 					limit: 10
 				},
-				booksList: []
+				booksList: [],
+				moreStatus: "loading"
 			}
 		},
 		onLoad() {
 			//调用电子书方法
 			this.getBooksList()
 		},
+		//下拉刷新的方法
+		onPullDownRefresh() {
+			this.booksObject.page = 1
+			this.getBooksList()
+		},
+		//上拉加载的方法
+		onReachBottom() {
+			if (this.moreStatus !== 'more') {
+				return
+			}
+			this.booksObject.page += 1
+			this.getBooksList()
+		},
 		methods: {
+			//点击电子书触发的方法
+			handleClickPages(item) {
+				this.navTo(`/pages/book-detail/book-detail?id=${item.id}`, {
+					login: true
+				})
+			},
 			//获取电子书接口数据
 			async getBooksList() {
 				try {
 					const response = await booksApi.getbooke(this.booksObject)
 					console.log(response, '电子数据');
-					this.booksList = response.data.data.rows
+					this.booksList = this.booksObject.page === 1 ? response.data.data.rows : this.booksList.concat(
+						response.data.data.rows)
+					this.moreStatus = response.data.data.rows.length > 10 ? "noMore" : "more"
 				} catch (e) {
 					console.log(e);
+					this.moreStatus = "more"
+					if (this.booksObject.page > 1) {
+						this.booksObject.page = this.booksObject.page - 1
+					}
 					//TODO handle the exception
+				} finally {
+					uni.stopPullDownRefresh()
 				}
 			}
 		}
@@ -62,6 +90,7 @@
 
 <style lang="scss">
 	.books-box {
+		position: relative;
 		display: flex;
 		padding: 30rpx;
 
@@ -77,6 +106,7 @@
 		}
 
 		.right {
+
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
@@ -90,9 +120,16 @@
 		}
 
 		.price {
-			
+
 			display: flex;
 			justify-content: space-between;
+
+			.border {
+				right: 0;
+				bottom: 20rpx;
+				position: absolute;
+			}
+
 			.money {
 				text:nth-child(1) {
 					color: #dd3a4b;
@@ -101,25 +138,9 @@
 
 				text:nth-child(2) {
 					font-size: 16rpx;
+					
 
 				}
-			}
-
-			.rouses {
-				
-				display: flex;
-				justify-content: space-around;
-				width: 200rpx;
-				height: 65rpx;
-				border: 2rpx solid #ccc;
-				border-radius: 30rpx;
-
-				text:nth-child(1) {
-					line-height: 65rpx;
-					font-size: 26rpx;
-				}
-
-				
 			}
 		}
 	}

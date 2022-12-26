@@ -86,6 +86,7 @@
 				text:nth-child(2) {
 					font-size: 20rpx;
 					color: #666;
+					text-decoration: line-through;
 				}
 			}
 		}

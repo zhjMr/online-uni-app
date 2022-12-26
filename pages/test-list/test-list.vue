@@ -11,7 +11,7 @@
 				<text>及格分: {{item.pass_score}}</text>
 			</view>
 			<view class="study-sum-box">
-				<button type="default" :class=" item.is_test ? 'eee' : 'btn'"
+				<button type="default" :class=" item.is_test ? 'eee' : 'btn'" :disabled=" item.is_test ? true : false"
 					@click="handleChangeRoom(item)">{{item.is_test?'你考过了':'参加考试'}}</button>
 			</view>
 		</view>
@@ -25,6 +25,7 @@
 	export default {
 		data() {
 			return {
+
 				page: 1,
 				limit: 5,
 				roomList: [], //考试列表数据
@@ -75,7 +76,7 @@
 						page,
 						limit
 					})
-					
+
 					// console.log(response, '考试列表数据');
 					this.roomList = this.page == 1 ? response.data.data.rows : this.roomList.concat(response.data.data
 						.rows)
