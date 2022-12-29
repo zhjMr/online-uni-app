@@ -14,7 +14,16 @@ const getbooks = (data) => {
 		data
 	})
 }
+//电子书目录详情
+const getbookList=(data={})=>{
+	return request({
+		url:"/mobile/book/detail",
+		method: 'GET',
+		data
+	})
+}
 export default {
 	bookDetail,
-	getbooks
+	getbooks,
+	getbookList
 }

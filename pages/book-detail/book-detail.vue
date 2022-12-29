@@ -93,6 +93,8 @@
 				if (item.price != 0 && !this.courseList.isbuy) {
 					this.$util.msg("请先购买该电子书")
 					return
+				}else{
+					this.navTo(`/pages/book/book?id=${item.id}&book_id=${this.courseList.id}`)
 				}
 			},
 			//获取tbbar点击切换事件
