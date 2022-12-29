@@ -53,14 +53,17 @@
 				<i-menu-item @click="handleOpenDetail(item)" v-for="(item,index) in columnList" :key="index"
 					:index="index" :title="item.title">
 					<view class='flex'>
-						<text v-if="item.orderby == 0" class="border border-danger text-danger rounded font-sm px-1 mt-1">
+						<text v-if="item.isfree"
+							class="border border-danger text-danger rounded font-sm px-1 mt-1">
 							免费试看
 						</text>
 					</view>
 
 				</i-menu-item>
 			</view>
-
+			<view class="buttonBottom" v-if="!courseList.isbuy">
+				<button @click="handleClickPay">{{'立即订购'+ courseList.price}}</button>
+			</view>
 		</view>
 
 	</view>
@@ -79,17 +82,7 @@
 				id: ""
 			}
 		},
-		// filters: {
-		// 	formatType(value) {
-		// 		const type = {
-		// 			media: "图文",
-		// 			audio: "音频",
-		// 			video: "视频",
-		// 			column: '图文'
-		// 		}
-		// 		return type[value]
-		// 	}
-		// },
+		
 		onLoad(options) {
 			this.id = options.id
 			//调用电子详情列表数据
@@ -118,7 +111,7 @@
 						id
 					})
 					console.log(response, '电子');
-					this.columnList=response.data.data.book_details
+					this.columnList = response.data.data.book_details
 					this.courseList = response.data.data
 					uni.setNavigationBarTitle({
 						title: response.data.data.title
@@ -142,7 +135,7 @@
 
 	.iamg {
 		display: flex;
-         
+
 		padding: 20rpx;
 		position: relative;
 		width: 100%;
@@ -158,6 +151,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+
 		view:nth-child(1) {
 
 			font-size: 40rpx;
@@ -168,6 +162,22 @@
 
 	.activeClass {
 		color: greenyellow;
+	}
+
+	.buttonBottom {
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		background-color: #fff;
+		padding: 30rpx;
+		border-top: 1rpx solid #eee;
+
+		button {
+			background-color: #5ccc84;
+			color: #fff;
+		}
+
 	}
 
 	.right {
@@ -212,6 +222,7 @@
 		background-color: #fff7f0;
 		padding: 20rpx;
 		border: 1rpx solid #ec8e45;
+
 		.boxRed {
 			font-size: 40rpx;
 			color: #e33443;
