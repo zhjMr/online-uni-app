@@ -1,48 +1,88 @@
 <template>
-	<view>
-		<uni-swipe-action>
-			<uni-swipe-action-item v-for="(item, index) in swipeList" :right-options="item.options" :key="item.id"
-				@click="swipeClick($event, index)">
-				<view class="content-box">
-					<text>{{ item.content }}</text>
-				</view>
-			</uni-swipe-action-item>
-		</uni-swipe-action>
+	<view >
+		
+		<view class="p-2">
+			<view v-for="(item,index) in bookList" :key="index" class="bg-white rounded p-2">
+				<view>{{item.content}}</view>
+				<view class="font-sm text-muted mt-1">{{item.created_time}}</view>
+			</view>
+		</view>
+		
+		
+		<uni-load-more :status="loadStatus"></uni-load-more>
 	</view>
 </template>
 
 <script>
+	import userApi from "@/api/book.js"
 	export default {
-		components: {},
 		data() {
 			return {
-				swipeList: [{
-					id: 1,
-					options: [{
-						text: '删除',
-						style: {
-							backgroundColor: 'rgb(255,58,49)'
-						}
-					}],
-					content: 'item2'
-				}, ]
-			};
+				page : 1,
+				limit : 10,
+				bookList : [],
+				loadStatus : 'loading',
+				total : 0
+			}
+		},
+
+		onLoad() {
+			this.initLoad()
+		},
+
+		onPullDownRefresh() {
+			this.initData()
+		},
+		onReachBottom() {
+			if(this.bookList.length >= this.total){
+				return
+			}
+			
+			this.page += 1
+			this.loadStatus = "more"
+			this.initLoad()
 		},
 		methods: {
-			swipeClick(e, index) {
-               console.log(e);
+			initData(){
+				this.page = 1
+				this.initLoad()
+			},
+			async initLoad(){
+				try{
+					
+					const data = {
+						page : this.page,
+						limit : this.limit
+					}
+					this.loadStatus = "loading"
+					const response = await userApi.getMessageList(data)
+					console.log(response);
+					this.total = response.data.data.count
+					let rows = response.data.data.rows
+					
+					this.bookList = this.page === 1 ? response.data.data.rows : this.bookList.concat(response.data.data.rows)
+					
+					this.loadStatus = this.bookList.length !== response.data.data.count  ? "more" :  "nomore"
+					
+					console.log("response=>", this.bookList)
+				}catch(e){
+					this.loadStatus = "more"
+					if(this.page > 1){
+						this.page -= 1
+					}
+					//TODO handle the exception
+					console.log("error=>", e)
+				}finally{
+
+					uni.stopPullDownRefresh()
+				}
 			}
 		}
-	};
-</script>
-<style>
-	.content-box {
-		flex: 1;
-		height: 44px;
-		line-height: 44px;
-		padding: 0 15px;
-		position: relative;
-		background-color: #fff;
-		border: 1px solid #f5f5f5;
 	}
+</script>
+
+<style lang="scss">
+page{
+	background-color: #eee; 
+}
 </style>
