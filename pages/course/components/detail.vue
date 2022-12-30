@@ -122,25 +122,49 @@
 			},
 			//点击收藏icons 触发的方法
 			async handleCollect() {
-				try {
-					this.collectFrom.goods_id = this.courseList.id
-					uni.showLoading({
-						mask: true
-					})
-					const response = await collectApi.getCartercollect(this.collectFrom)
-					console.log(response);
-					if (response.data.msg == "ok") {
+				if (!this.courseList.isfava) {
+					try {
+						this.collectFrom.goods_id = this.courseList.id
+						uni.showLoading({
+							mask: true
+						})
+						const response = await collectApi.getCartercollect(this.collectFrom)
+						console.log(response);
+						if (response.data.msg == "ok") {
+							uni.hideLoading()
+							this.$util.msg("收藏成功")
+							this.courseList.isfava = true
+						} else {
+							this.$util.msg(response.data.data)
+						}
+					} catch (e) {
 						uni.hideLoading()
-						this.$util.msg("收藏成功")
-						this.courseList.isfava = true
-					} else {
-						this.$util.msg(response.data.data)
+						console.log(e);
+						//TODO handle the exception
 					}
-				} catch (e) {
-					uni.hideLoading()
-					console.log(e);
-					//TODO handle the exception
+				} else {
+					try {
+						this.collectFrom.goods_id = this.courseList.id
+						uni.showLoading({
+							mask: true
+						})
+						const response = await collectApi.getcollecOut(this.collectFrom)
+						console.log(response);
+						if (response.data.msg == "ok") {
+							uni.hideLoading()
+							this.$util.msg("取消收藏成功")
+						} else {
+							this.$util.msg(response.data.data)
+						}
+					} catch (e) {
+						uni.hideLoading()
+						console.log(e);
+						//TODO handle the exception
+					}
+					this.courseList.isfava = false
 				}
+
+
 			},
 			//拼团
 			handleGroup() {
