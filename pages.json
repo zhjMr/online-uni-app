@@ -215,7 +215,7 @@
 			"path": "pages/special/special",
 			"style": {
 				"navigationBarTitleText": "专栏列表",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 
 		}, {
@@ -337,6 +337,16 @@
             {
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/curriculums/curriculums",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "课程列表",
+                "enablePullDownRefresh": true,
+				"navigationBarBackgroundColor": "#fff"
             }
             
         }

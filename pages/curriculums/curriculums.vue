@@ -10,8 +10,9 @@
 					{{item.title}}
 				</view>
 				<view class="sprice">
-					<text>￥{{item.price}}</text>
-					<text>￥{{item.t_price}}</text>
+					<text v-if="item.price ==0">免费</text>
+					<text v-if="item.price >0">￥{{item.price}}</text>
+					<text v-if="item.t_price">￥{{item.t_price}}</text>
 				</view>
 			</view>
 		</view>
@@ -33,17 +34,6 @@
 				statusMore: "loading"
 			}
 		},
-		onReachBottom() {
-			if (this.statusMore !== 'more') {
-				return
-			}
-			this.specialOnject.page += 1
-			this.getSpecilList()
-		},
-		onPullDownRefresh() {
-			this.specialOnject.page = 1
-			this.getSpecilList()
-		},
 		onLoad() {
 			//调用专栏列表数据
 			this.getSpecilList()
@@ -59,21 +49,38 @@
 				return type[value]
 			}
 		},
+		onReachBottom() {
+			if (this.statusMore !== 'more') {
+				return
+			}
+			this.specialOnject.page += 1
+			this.getSpecilList()
+		},
+		onPullDownRefresh() {
+			this.specialOnject.page = 1
+			this.getSpecilList()
+		},
 		methods: {
 			handleChangeNew(item) {
-				this.navTo(`/pages/column/column?id=${item.id}`)
+				if (!item.type) {
+					this.navTo(`/pages/column/column?id=${item.id}`)
+				} else {
+					this.navTo(`/pages/course/course?id=${item.id}`)
+				}
 			},
 			//获取专栏列表数据
 			async getSpecilList() {
 				try {
-					const response = await specialApi.getColum(this.specialOnject)
-					console.log(response, '专栏列表');
+					const response = await specialApi.getcourseList(this.specialOnject)
+					console.log(response, '课程列表');
 					this.specialList = this.specialOnject.page == 1 ? response.data.data.rows : this.specialList
 						.concat(response.data.data.rows)
 					this.statusMore = response.data.data.rows.length < 10 ? "nomore" : "more"
 				} catch (e) {
 					console.log(e);
 					//TODO handle the exception
+				} finally {
+					uni.stopPullDownRefresh()
 				}
 			}
 		}

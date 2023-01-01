@@ -1,7 +1,6 @@
 <template>
 	<view>
 		<view class="group">
-
 			<view class="grouplist" v-for="(item,index) in groupList" :key="index" @click="handleChangeNew(item)">
 				<view class="images">
 					<view class="autoView" v-if="item.type=='video'">视频</view>

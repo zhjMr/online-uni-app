@@ -39,10 +39,20 @@ const getbbs = (data) => {
 		data
 	})
 }
+//获取课程列表数据
+
+const getcourseList = (data) => {
+	return request({
+		url: "/mobile/course/list",
+		method: "GET",
+		data
+	})
+}
 export default {
 	getColum,
 	getliver,
 	getbooke,
 	getroom,
-	getbbs
+	getbbs,
+	getcourseList
 }

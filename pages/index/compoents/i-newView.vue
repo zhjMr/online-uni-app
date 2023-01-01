@@ -2,7 +2,7 @@
 	<view>
 		<view class="title">
 			<text>最新列表</text>
-			<text>查看更多</text>
+			<text @click="handleChangeView">查看更多</text>
 		</view>
 		<view class="group">
 			<view class="grouplist" v-for="(item,index) in NewList" :key="index" @click="handleChangeNew(item)">
@@ -57,6 +57,10 @@
 			}
 		},
 		methods: {
+			//点击查看更多触发的方法
+			handleChangeView(){
+				this.navTo('/pages/curriculums/curriculums')
+			},
 			//点击最新列表触发的事件
 			handleChangeNew(item) {
 				if (!item.type) {
